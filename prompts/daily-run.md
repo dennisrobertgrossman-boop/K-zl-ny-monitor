@@ -17,6 +17,8 @@ Végezd el a Magyar Közlöny napi jogi átvilágítását a Henkel Magyarorszá
 
 **1. A legfrissebb lapszám azonosítása.** Nyisd meg a https://magyarkozlony.hu/ oldalt, és keresd meg a legfrissebb **Magyar Közlöny** lapszámot — nem a Hivatalos Értesítőt és nem mellékletet. Ellenőrizd a lapszámot, a megjelenés dátumát és a hivatalos PDF közvetlen linkjét. Az előző futás óta megjelent minden lapszámot dolgozd fel, a legfrissebbel kezdve.
 
+**Hogy tudod meg, hol tartott az előző futás:** listázd ki a közzétett artifactjaidat, és keresd a „Magyar Közlöny <év>/<szám>" című oldalakat. A legnagyobb sorszámú ilyen artifact nevezi meg az utoljára feldolgozott lapszámot. Ha egyetlen ilyen artifact sincs, csak a legfrissebb lapszámot dolgozd fel.
+
 **2. Ha nincs új lapszám az előző futás óta, ne készíts semmit** — se riportot, se artifactot, se e-mailt. Írj egy sort arról, melyik a legfrissebb lapszám és mikor jelent meg, és állj meg. Riport csak új lapszám esetén készül.
 
 **3. A teljes szöveg beolvasása.** Ne mentsd el a PDF-et és ne készíts jegyzetelt munkapéldányt. Olvasd be a hivatalos PDF teljes szövegét — mellékletekkel, táblázatokkal, átmeneti rendelkezésekkel és hatálybaléptető rendelkezésekkel együtt —, és tartsd nyilván az oldalszámokat, hogy minden megállapítás visszahivatkozható legyen.
@@ -45,7 +47,7 @@ Zárd ki a protokolláris, egyedi kinevezési, kizárólag helyi és kizárólag
 
 Módosító jogszabálynál a joghatást magyarázd el, ne a módosító szöveget ismételd. A hivatalos magyar megnevezéseket és azonosítókat szó szerint őrizd meg.
 
-**7. Nyelv és forma.** A riport végig **magyarul** készül — a címsorok, összefoglalók, értékelések és a prioritáscímkék (Magas / Közepes / Alacsony) is. Betűtípus: **Segoe UI**. Jelöld meg: „Belső munkapéldány — az észrevételek nem részei a hivatalos közzétételnek." Tedd közzé HTML artifactként, és add meg a teljes riportot a válaszban is.
+**7. Nyelv és forma.** A riport végig **magyarul** készül — a címsorok, összefoglalók, értékelések és a prioritáscímkék (Magas / Közepes / Alacsony) is. Betűtípus: **Segoe UI**. Jelöld meg: „Belső munkapéldány — az észrevételek nem részei a hivatalos közzétételnek." Tedd közzé HTML artifactként **„Magyar Közlöny <év>/<szám>" címmel** — ebből tudja a következő futás, hol tartottál —, és add meg a teljes riportot a válaszban is.
 
 **8. E-mail — minden elkészült riportot el kell küldeni a denes.grossman@henkel.com címre.** Használd a Gmail (vagy más e-mail) eszközt.
 - Tárgy: `Magyar Közlöny <év>. évi <szám>. szám — napi jogi átvilágítás (<n> magas / <n> közepes / <n> alacsony)`
