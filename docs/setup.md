@@ -2,20 +2,33 @@
 
 ## Schedule
 
-The agent runs as a Claude Routine that starts a **fresh session on each firing** and
-sends it the message in `prompts/daily-run.md`.
+The agent runs as a Claude Routine named **Közlöny monitor email feladat**, created from
+the claude.ai Routines interface. It starts a **fresh session on each firing** and sends
+it the message in `prompts/daily-run.md`.
 
-- Cron: `3 5 * * *` — evaluated in Coordinated Universal Time (UTC).
-- That is **07:03 Budapest time during Central European Summer Time** and **06:03
-  Budapest time during Central European Time**. Cron schedules are stored in UTC and do
-  not follow the Hungarian daylight-saving transition; to keep a fixed local hour all
-  year, update the Routine's cron expression at each transition (`3 5 * * *` in summer,
-  `3 6 * * *` in winter).
+- Cron: `0 7 * * *` — evaluated in Coordinated Universal Time (UTC).
+- That is **09:00 Budapest time during Central European Summer Time** and **08:00 during
+  Central European Time**. Cron schedules are stored in UTC and do not follow the
+  Hungarian daylight-saving transition, so the local hour shifts by one in winter; change
+  the expression at the transition if a fixed local hour matters.
 - It runs every day. Magyar Közlöny is normally published on working days; on a day with
-  no new issue the agent reports that and stops.
+  no new issue the run produces nothing and stops after a one-line note.
 
-Completion notifications (push and email) are enabled on the Routine, so each morning's
-result reaches the owner's phone and inbox.
+Push notifications are enabled on the Routine. The report itself arrives by email, not
+through the notification.
+
+The Routine must be created and edited from the claude.ai Routines interface: a Routine
+created there cannot be updated or fired by an agent (`update_trigger` and `fire_trigger`
+both refuse it with *"Agents can only update routines they created"*). To test a change,
+edit the prompt in that interface and use **Run now**.
+
+## Verified
+
+Exercised end to end on 2026-09-09 against **Magyar Közlöny 2026. évi 127. szám**: the
+scheduled Routine reached magyarkozlony.hu, read the full text of the official PDF,
+produced the Hungarian report and emailed it to the legal recipient without supervision.
+A second run on the same day correctly produced nothing, because no newer issue had been
+published.
 
 ## Delivery
 
