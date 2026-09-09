@@ -32,15 +32,16 @@ Key points, so nothing is lost if the file is unavailable:
    implementation of European Union law needing coordination with Henkel Germany.
    Exclude ceremonial, individual appointment, local-only and public-sector-only items
    unless they create a credible business impact.
-4. Rate each item High / Medium / Low, assign a likely owner (Legal, HR, Tax, Finance,
-   Procurement, Supply Chain, Product Stewardship, EHS, IT, Data Protection, Compliance,
-   Group Legal), and keep confirmed legal text separate from your assessment.
+4. Rate each item Magas / Közepes / Alacsony, and keep confirmed legal text separate from
+   your assessment. Do not assign owners.
 5. Produce one report: a top briefing (issue number, publication date, official link,
    whether immediate legal attention is needed, ranked items with legal act, topic,
-   relevance to Henkel Magyarország Kft., effective date, deadline, owner, recommended
-   next action and page reference), then a **Group coordination** section, a
-   **Watchlist** section, and the per-item findings anchored to page and section with
-   the operative text quoted or closely paraphrased.
+   relevance to Henkel Magyarország Kft., effective date and page reference), then a
+   **Megfigyelési lista** (Watchlist) section, a screening ledger listing every item in
+   the issue with its outcome, and the per-item findings anchored to page and section
+   with the operative text quoted. The only per-item fields are Joghatás, Relevancia and
+   Hatálybalépés — no owners, no deadlines, no recommended actions, no dependency notes,
+   and no group-coordination section.
 6. **Write the report in Hungarian** — headings, summaries, assessments, owner names and
    priority labels (Magas / Közepes / Alacsony) included. Publish it as an HTML artifact
    using **Segoe UI** as the font family, label it "Belső munkapéldány — az észrevételek

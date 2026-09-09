@@ -111,10 +111,6 @@ fails, follow Error handling.
    - **High** — likely action, deadline, material exposure, or immediate escalation.
    - **Medium** — assessment, monitoring, or business-owner confirmation is needed.
    - **Low** — remote or contextual relevance worth recording.
-6. Assign likely owners: Legal, HR, Tax, Finance, Procurement, Supply Chain, Product
-   Stewardship, EHS (Environment, Health and Safety), IT, Data Protection, Compliance,
-   or Group Legal.
-
 If the whole text cannot be read in one pass, read it in ordered segments and confirm
 in the report that the entire issue was covered, page range by page range.
 
@@ -127,11 +123,15 @@ Put this at the very beginning of the report:
 - Issue number, publication date, and the official source link.
 - A clear statement on whether immediate legal attention is needed.
 - A ranked list of relevant items, highest priority first.
-- For each item: legal act, topic, why it matters to Henkel Magyarország Kft.,
-  effective date, deadline, likely owner, recommended next action, and page reference.
-- A separate **Group coordination** section for matters requiring alignment with Henkel
-  Germany or another regional function.
-- A short **Watchlist** section for uncertain or lower-priority items.
+- For each item: legal act, topic, why it matters to Henkel Magyarország Kft., effective
+  date, and page reference.
+- A short **Watchlist** section (Megfigyelési lista) for uncertain or lower-priority
+  items.
+- A screening ledger listing every item in the issue with its outcome.
+
+Do not include likely owners, deadlines, recommended next actions, dependency notes, or
+a group-coordination section. The report states what the law says and when it takes
+effect; deciding who acts on it is the reader's.
 
 Use priority marking consistently: red for **Magas** (High), amber for **Közepes**
 (Medium), yellow for **Alacsony** (Low). In HTML output use colour plus a text label; in
@@ -146,16 +146,15 @@ For each relevant item, in priority order, give:
 1. **Anchor** — page number (and where useful, section/§ number and the opening words
    of the passage) of the first substantive appearance of the provision in the official
    PDF. Cite the narrowest passage that supports the finding, not a whole page.
-2. **Quoted or closely paraphrased operative text** — the confirmed legal text.
-3. **Plain-language summary.**
-4. **Specific relevance to Henkel Magyarország Kft.**
-5. **Effective date or deadline.**
-6. **Priority and likely owner.**
-7. **Recommended follow-up.**
+2. **Quoted operative text** — the confirmed legal text, verbatim in Hungarian.
+3. **Joghatás** — the legal effect in plain language.
+4. **Relevancia** — specific relevance to Henkel Magyarország Kft.
+5. **Hatálybalépés** — the effective date.
+6. **Priority.**
 
-For amendments, explain the legal effect rather than merely repeating the amending
-text, and flag when review of the consolidated text is still needed. Preserve official
-Hungarian titles and identifiers exactly.
+These are the only per-item fields. For amendments, explain the legal effect rather than
+merely repeating the amending text. Preserve official Hungarian titles and identifiers
+exactly.
 
 ## Step 5 — Validate and deliver
 
@@ -176,8 +175,8 @@ Hungarian titles and identifiers exactly.
   the user is using.
 - Use only the official Magyar Közlöny PDF as the primary source for the issue review.
 - Prioritise legal accuracy and traceability over visual polish.
-- Do not infer Henkel business facts that are not known; frame uncertain applicability
-  as a question for the likely internal owner.
+- Do not infer Henkel business facts that are not known; where applicability turns on a
+  business fact this review cannot establish, say so and leave the point open.
 - Treat the output as internal legal triage, not formal legal advice.
 - Use every technical term strictly within the confines of its legal definition, and
   write out any abbreviation in full at its first use.
@@ -194,6 +193,4 @@ Hungarian titles and identifiers exactly.
   recognition (OCR) and visibly flag every passage that needs manual verification.
 - If the full text cannot be read, still report the issue number, date and official
   link, list what was read, and state precisely which pages were not covered.
-- If a provision depends on another instrument or on a consolidated text, flag the
-  dependency and recommend follow-up research.
 - Never invent an obligation, deadline, legal effect, page reference, or quotation.
