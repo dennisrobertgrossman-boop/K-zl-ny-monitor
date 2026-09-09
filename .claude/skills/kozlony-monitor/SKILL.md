@@ -30,12 +30,23 @@ Hungarian. The chat response that accompanies it is written in the language the 
 using in the conversation.
 
 Publish the report as an HTML artifact when the Artifact tool is available in the
-session, and also give the full report in the chat response. Where an email connector is
-available in the run, send the report to **denes.grossman@henkel.com** as an HTML email
-body — self-contained, with inline styles and no external stylesheet, because the
-artifact link is private and will not open for an external recipient. Use **Segoe UI** as the
+session, and also give the full report in the chat response. Use **Segoe UI** as the
 font family in any HTML output. If the Artifact tool is unavailable, the chat response
 alone is the deliverable — say so.
+
+**Every report is emailed to denes.grossman@henkel.com.** Use a Gmail or other email
+tool where one is available in the run.
+
+- Subject: `Magyar Közlöny <év>. évi <szám>. szám — napi jogi átvilágítás (<n> magas /
+  <n> közepes / <n> alacsony)`
+- Body: the full report as a self-contained HTML body (`htmlBody`), inline styles on
+  every element, Segoe UI as the font family. No external stylesheet, no CSS variables
+  and no `<style>` block — email clients strip them. Use `<table>` layout rather than
+  flex or grid. Supply a plain-text `body` alternative too.
+- Never send the artifact link as the deliverable: the artifact is private and will not
+  open for an external recipient.
+- If no email tool is available in the run, say so plainly at the top of the chat
+  response and name what is missing. Never skip the email silently.
 
 Never present the report as the official publication, and never restate it as if it
 were the text of the issue. Label it: **"Belső munkapéldány — az észrevételek nem

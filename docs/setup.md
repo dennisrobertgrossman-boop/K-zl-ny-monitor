@@ -19,8 +19,13 @@ result reaches the owner's phone and inbox.
 
 ## Delivery
 
+- Email to **denes.grossman@henkel.com** — the primary deliverable. Full report as a
+  self-contained HTML body with inline styles; never the artifact link, which is private
+  and will not open for an external recipient.
 - HTML artifact, font family Segoe UI, where the Artifact tool is available in the run.
 - Full report in the chat response of the run's session, always.
+- Nothing at all when no new issue has been published since the previous run — no
+  report, no artifact, no email, just a one-line note naming the most recent issue.
 - The run makes no commits and opens no pull requests.
 
 ## Prerequisites
@@ -65,7 +70,20 @@ Reference: https://code.claude.com/docs/en/cloud-environments#allow-specific-dom
 If a host is still blocked, the run reports the blocked host and asks for the official
 link rather than substituting an unofficial copy.
 
-### 2. Optional: the Lawstronaut connector
+### 2. Required for email delivery: the Gmail connector on the Routine
+
+A Routine created through the Claude Code Remote tools stores **no connectors**, and this
+organization does not allow attaching them programmatically — `create_trigger` rejects the
+`connectors` parameter with *"the connectors parameter is not available for this
+organization"*. The sessions the Routine starts therefore have no Gmail tool and cannot
+send the report anywhere.
+
+To make the daily email work, recreate the Routine from the **claude.ai Routines
+interface** with the **Gmail** connector attached, using the prompt in
+`prompts/daily-run.md`, then delete the tool-created Routine. Until that is done, each run
+reports at the top of its response that it could not send the email.
+
+### 3. Optional: the Lawstronaut connector
 
 Where the Lawstronaut connector is authorised for the account, the agent can use it as a
 secondary route to the corpus. It is not a substitute for the official PDF: the official

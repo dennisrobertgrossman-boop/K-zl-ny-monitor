@@ -48,9 +48,13 @@ Key points, so nothing is lost if the file is unavailable:
    nem részei a hivatalos közzétételnek.", and also give the full report in the chat
    response. Write the chat response itself in the language the user is using. If the
    Artifact tool is unavailable, the chat response alone is the deliverable — say so.
-   Where an email connector is available in the run, also send the report to
-   **denes.grossman@henkel.com** as a self-contained HTML email body with inline styles;
-   the artifact link is private and will not open for an external recipient.
+   **Every report is emailed to denes.grossman@henkel.com** with a Gmail or other email
+   tool where one is available: subject `Magyar Közlöny <év>. évi <szám>. szám — napi
+   jogi átvilágítás (<n> magas / <n> közepes / <n> alacsony)`, the full report as a
+   self-contained HTML body with inline styles and `<table>` layout, plus a plain-text
+   alternative. Never send the artifact link instead — it is private and will not open
+   for an external recipient. If no email tool is available, say so at the top of the
+   chat response rather than skipping it silently.
 7. End with: the issue reviewed, the count of High / Medium / Low items, and any
    limitations. Never invent an obligation, deadline, legal effect, page reference or
    quotation. If the official site or PDF cannot be reached, report the blocked host and
