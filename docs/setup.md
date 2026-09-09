@@ -25,19 +25,47 @@ result reaches the owner's phone and inbox.
 
 ## Prerequisites
 
-### 1. Network egress must allow the official source
+### 1. Network access must allow the official source
 
-The environment's network egress policy must allow:
+By default a cloud environment uses the **Trusted** network access level, which allows
+package registries and a fixed list of common domains — and nothing else. The official
+Magyar Közlöny website is not on that list, so runs report HTTP 403 from the egress
+proxy until the environment is changed to **Custom** with the domains below.
 
-- `magyarkozlony.hu` — the official Magyar Közlöny website and the official PDF files.
+**How to change it** (this is an account setting; a session cannot change it itself):
 
-Recommended to allow as well, for verifying identifiers and consolidated texts:
+1. Open https://claude.ai/code.
+2. In the row above the message box, click the cloud icon showing the current
+   environment's name. There is no settings page or direct link for it.
+3. Hover the environment you use for this repository and click the settings (gear) icon
+   on the right. The **Update cloud environment** dialog opens.
+4. Set **Network access** to **Custom**.
+5. In **Allowed domains**, enter one domain per line:
 
-- `njt.hu` — Nemzeti Jogszabálytár (National Legislation Database).
+   ```
+   magyarkozlony.hu
+   *.magyarkozlony.hu
+   njt.hu
+   *.njt.hu
+   ```
 
-If a host is blocked, the run reports the blocked host and asks for the official link
-rather than substituting an unofficial copy. Network policy is set on the environment,
-see https://code.claude.com/docs/en/claude-code-on-the-web.
+   `magyarkozlony.hu` is the official Magyar Közlöny website and the source of the
+   official PDF files. `njt.hu` is the Nemzeti Jogszabálytár (National Legislation
+   Database), used to verify identifiers and consolidated texts. The `*.` lines cover
+   any subdomain a PDF may be served from.
+6. Tick **Also include default list of common package managers**, so nothing that
+   already works stops working.
+7. Save the dialog.
+
+A session copies the environment configuration once, at start-up. A session already
+running keeps the old settings; the change takes effect in sessions started afterwards.
+The Routine starts a fresh session on each firing, so its next run picks the change up
+automatically.
+
+Reference: https://code.claude.com/docs/en/cloud-environments#allow-specific-domains
+
+If a host is still blocked, the run reports the blocked host and asks for the official
+link rather than substituting an unofficial copy.
 
 ### 2. Optional: the Lawstronaut connector
 
