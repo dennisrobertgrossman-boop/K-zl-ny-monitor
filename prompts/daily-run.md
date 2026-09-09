@@ -41,10 +41,12 @@ Key points, so nothing is lost if the file is unavailable:
    next action and page reference), then a **Group coordination** section, a
    **Watchlist** section, and the per-item findings anchored to page and section with
    the operative text quoted or closely paraphrased.
-6. Publish the report as an HTML artifact using **Segoe UI** as the font family, label it
-   "Belső munkapéldány — az észrevételek nem részei a hivatalos közzétételnek.", and also
-   give the full report in the chat response. If the Artifact tool is unavailable, the
-   chat response alone is the deliverable — say so.
+6. **Write the report in Hungarian** — headings, summaries, assessments, owner names and
+   priority labels (Magas / Közepes / Alacsony) included. Publish it as an HTML artifact
+   using **Segoe UI** as the font family, label it "Belső munkapéldány — az észrevételek
+   nem részei a hivatalos közzétételnek.", and also give the full report in the chat
+   response. Write the chat response itself in the language the user is using. If the
+   Artifact tool is unavailable, the chat response alone is the deliverable — say so.
 7. End with: the issue reviewed, the count of High / Medium / Low items, and any
    limitations. Never invent an obligation, deadline, legal effect, page reference or
    quotation. If the official site or PDF cannot be reached, report the blocked host and

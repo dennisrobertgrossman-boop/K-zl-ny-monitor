@@ -24,6 +24,11 @@ It reads the full text of the official PDF in place and delivers a written repor
 3. The per-item findings, each anchored to the page and section where the underlying
    text appears in the official PDF (Section 4 below).
 
+**The report is written in Hungarian.** Every part of it — headings, summaries,
+assessments, owner names, priority labels, the method and limitations section — is in
+Hungarian. The chat response that accompanies it is written in the language the user is
+using in the conversation.
+
 Publish the report as an HTML artifact when the Artifact tool is available in the
 session, and also give the full report in the chat response. Use **Segoe UI** as the
 font family in any HTML output. If the Artifact tool is unavailable, the chat response
@@ -128,9 +133,9 @@ Put this at the very beginning of the report:
   Germany or another regional function.
 - A short **Watchlist** section for uncertain or lower-priority items.
 
-Use priority marking consistently: red for High, amber for Medium, yellow for Low. In
-HTML output use colour plus a text label; in plain text use the text label alone.
-Meaning must never depend on colour alone.
+Use priority marking consistently: red for **Magas** (High), amber for **Közepes**
+(Medium), yellow for **Alacsony** (Low). In HTML output use colour plus a text label; in
+plain text use the text label alone. Meaning must never depend on colour alone.
 
 ## Step 4 — Per-item findings anchored to the text
 
@@ -166,8 +171,9 @@ Hungarian titles and identifiers exactly.
 
 ## General guidelines
 
-- Respond in the user's language while preserving official Hungarian titles and
-  identifiers.
+- Write the report itself in Hungarian, preserving official Hungarian titles and
+  identifiers exactly as published. Write the accompanying chat response in the language
+  the user is using.
 - Use only the official Magyar Közlöny PDF as the primary source for the issue review.
 - Prioritise legal accuracy and traceability over visual polish.
 - Do not infer Henkel business facts that are not known; frame uncertain applicability
