@@ -81,8 +81,21 @@ fails, follow Error handling.
 **Goal:** identify every provision that meets the relevance standard.
 
 1. Read the full text of the PDF at the official link, including annexes, tables,
-   transitional rules, and entry-into-force provisions. Read it in place — fetch,
-   stream, or view the text; do not save a copy of the file.
+   transitional rules, and entry-into-force provisions. Read it in place — stream the
+   text; do not save a copy of the file.
+
+   What works in this environment: `curl` reaches magyarkozlony.hu once the domain is
+   allowed, but **WebFetch does not** — it is refused as `EGRESS_BLOCKED` because it
+   fetches through a different path that does not consult the environment's allowlist.
+   Stream the issue straight into a text extractor instead:
+
+   ```
+   curl -sSL "<official PDF link>" | pdftotext -layout - issue.txt
+   ```
+
+   `pdftotext` comes from `poppler-utils`; install it with `apt-get update && apt-get
+   install -y poppler-utils` if the command is missing. Extract the homepage listing the
+   same way (`curl -sSL https://magyarkozlony.hu/`) rather than with WebFetch.
 2. Keep track of the page number of every passage you rely on, so each finding can be
    cited back to the issue.
 3. For each potentially relevant legal act or provision, verify its official title,

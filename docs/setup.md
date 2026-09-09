@@ -57,10 +57,8 @@ proxy until the environment is changed to **Custom** with the domains below.
    already works stops working.
 7. Save the dialog.
 
-A session copies the environment configuration once, at start-up. A session already
-running keeps the old settings; the change takes effect in sessions started afterwards.
-The Routine starts a fresh session on each firing, so its next run picks the change up
-automatically.
+The change applies immediately, including to sessions that are already running — the
+policy is enforced per request at the egress proxy, not copied at session start-up.
 
 Reference: https://code.claude.com/docs/en/cloud-environments#allow-specific-domains
 
