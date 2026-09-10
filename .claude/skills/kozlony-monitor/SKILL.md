@@ -43,6 +43,14 @@ tool where one is available in the run.
   every element, Segoe UI as the font family. No external stylesheet, no CSS variables
   and no `<style>` block — email clients strip them. Use `<table>` layout rather than
   flex or grid. Supply a plain-text `body` alternative too.
+- Pass the HTML **directly, in full, as the `htmlBody` parameter**. Never reference it by
+  file path and never use shell substitution such as `$(cat body.html)`: the tool's
+  parameter is not a shell, the substitution does not run, and the recipient receives the
+  literal `$(cat ...)` text. If the report was written to a file first, read it back and
+  paste the content into the parameter.
+- One report, one email. Verify the body is the finished HTML before sending. If a broken
+  message did go out, send the correction as a reply in the same thread
+  (`replyThreadId`), not as a new thread.
 - Never send the artifact link as the deliverable: the artifact is private and will not
   open for an external recipient.
 - If no email tool is available in the run, say so plainly at the top of the chat

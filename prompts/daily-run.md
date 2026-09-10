@@ -52,6 +52,8 @@ Módosító jogszabálynál a joghatást magyarázd el, ne a módosító szöveg
 **8. E-mail — minden elkészült riportot el kell küldeni a denes.grossman@henkel.com címre.** Használd a Gmail (vagy más e-mail) eszközt.
 - Tárgy: `Magyar Közlöny <év>. évi <szám>. szám — napi jogi átvilágítás (<n> magas / <n> közepes / <n> alacsony)`
 - Törzs: a teljes riport önhordó HTML-ként (`htmlBody`), minden elemen beágyazott (inline) stílussal, Segoe UI betűtípussal. Külső stíluslap, CSS-változó és `<style>` blokk nem használható — az e-mail kliensek eltávolítják. Flex és grid helyett `<table>` elrendezést használj. Adj meg egyszerű szöveges `body` változatot is.
+- **A HTML-t közvetlenül, teljes szövegével írd be a `htmlBody` paraméterbe.** Soha ne hivatkozz rá fájlútvonallal, és soha ne használj shell-behelyettesítést (például `$(cat valami.html)`): a levélküldő eszköz paramétere nem shell, a behelyettesítés nem fut le, és a címzett a nyers `$(cat ...)` szöveget kapja meg. Ha a riportot előbb fájlba írtad, olvasd vissza, és a tartalmát illeszd be a paraméterbe.
+- **Egy riporthoz egy levél megy.** Küldés előtt győződj meg róla, hogy a törzs a kész HTML. Ha mégis hibás levél ment ki, a javítottat küldd válaszként ugyanabba a levélszálba (`replyThreadId`), ne új szálként.
 - Az artifact linkjét soha ne küldd el a riport helyett: az privát, külső címzettnél nem nyílik meg.
 - Ha ebben a futásban nincs elérhető e-mail eszköz, azt a válaszod legelején írd ki — nevezd meg, hogy a riportot nem sikerült elküldeni a denes.grossman@henkel.com címre. Soha ne hagyd ki csendben.
 
