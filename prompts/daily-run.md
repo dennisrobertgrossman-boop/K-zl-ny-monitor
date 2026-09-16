@@ -13,7 +13,7 @@ works whether or not the Routine's session has the repository checked out. It de
 
 ---
 
-Végezd el a Magyar Közlöny napi jogi átvilágítását a Henkel Magyarország Kft. belső jogi csapata számára.
+Végezd el a Magyar Közlöny napi jogi átvilágítását egy FMCG (gyors forgalmú fogyasztási cikkeket gyártó) vállalat magyarországi leányvállalatának belső jogi csapata számára. A vállalat nevét sehol — sem a riportban, sem az e-mailben — ne szerepeltesd.
 
 **1. A legfrissebb lapszám azonosítása.** Nyisd meg a https://magyarkozlony.hu/ oldalt, és keresd meg a legfrissebb **Magyar Közlöny** lapszámot — nem a Hivatalos Értesítőt és nem mellékletet. Ellenőrizd a lapszámot, a megjelenés dátumát és a hivatalos PDF közvetlen linkjét. Az előző futás óta megjelent minden lapszámot dolgozd fel, a legfrissebbel kezdve.
 
@@ -31,7 +31,7 @@ curl -sSL "<hivatalos PDF link>" | pdftotext -layout - issue.txt
 
 Ha a pdftotext hiányzik: `apt-get update && apt-get install -y poppler-utils`. A kezdőlapot is curl-lel töltsd le: `curl -sSL https://magyarkozlony.hu/`.
 
-**4. Szűrés.** Vizsgáld át az egész lapszámot a Henkel-relevanciamérce szerint: társasági irányítás, nyilvántartások, jelentéstétel és cégcsoporton belüli megállapodások; foglalkoztatás, juttatások, munkavédelem, idegenrendészet és bérszámfejtés; kereskedelmi szerződések, beszerzés, forgalmazás, fizetési feltételek, versenyjog és fogyasztókkal szembeni gyakorlatok; termékmegfelelőség, vegyi anyagok, termékbiztonság, címkézés, reklám, piacfelügyelet és visszahívások; környezetvédelmi engedélyek, hulladék, csomagolás, kiterjesztett gyártói felelősség, fenntarthatóság, energia és kibocsátás; adatvédelem, kiberbiztonság, digitális szolgáltatások, mesterséges intelligencia, nyilvántartások és hatósági adatszolgáltatás; adó, vám, szankciók, kereskedelmi korlátozások, ingatlan, jogviták, közigazgatási eljárás és végrehajtás; valamint az európai uniós jog magyarországi végrehajtása.
+**4. Szűrés.** Vizsgáld át az egész lapszámot az FMCG-relevanciamérce szerint: társasági irányítás, nyilvántartások, jelentéstétel és cégcsoporton belüli megállapodások; foglalkoztatás, juttatások, munkavédelem, idegenrendészet és bérszámfejtés; kereskedelmi szerződések, beszerzés, forgalmazás, fizetési feltételek, versenyjog és fogyasztókkal szembeni gyakorlatok; termékmegfelelőség, vegyi anyagok, termékbiztonság, címkézés, reklám, piacfelügyelet és visszahívások; környezetvédelmi engedélyek, hulladék, csomagolás, kiterjesztett gyártói felelősség, fenntarthatóság, energia és kibocsátás; adatvédelem, kiberbiztonság, digitális szolgáltatások, mesterséges intelligencia, nyilvántartások és hatósági adatszolgáltatás; adó, vám, szankciók, kereskedelmi korlátozások, ingatlan, jogviták, közigazgatási eljárás és végrehajtás; valamint az európai uniós jog magyarországi végrehajtása.
 
 Zárd ki a protokolláris, egyedi kinevezési, kizárólag helyi és kizárólag közszférát érintő tételeket, kivéve, ha hihető üzleti hatást keletkeztetnek.
 

@@ -1,15 +1,16 @@
 ---
 name: kozlony-monitor
-description: Daily legal triage of the newest Magyar Közlöny issue for the in-house legal team of Henkel Magyarország Kft. Reads the full text of the official PDF in place (no download, no annotated copy) and produces a page-referenced, prioritised written report. Use when asked to review, screen, or monitor Magyar Közlöny, or when the daily Közlöny Routine fires.
+description: Daily legal triage of the newest Magyar Közlöny issue for the in-house legal team of a Hungarian FMCG (fast-moving consumer goods) subsidiary. Reads the full text of the official PDF in place (no download, no annotated copy) and produces a page-referenced, prioritised written report. Use when asked to review, screen, or monitor Magyar Közlöny, or when the daily Közlöny Routine fires.
 ---
 
-# Magyar Közlöny daily review — Henkel Magyarország Kft.
+# Magyar Közlöny daily review — FMCG subsidiary legal team
 
 ## Purpose
 
 Find the newest official **Magyar Közlöny** issue, read its entire text, and turn it
-into a practical legal-review package for the in-house legal team of **Henkel
-Magyarország Kft.**, a Hungarian subsidiary of the Germany-based Henkel group.
+into a practical legal-review package for the in-house legal team of **a Hungarian
+subsidiary of a multinational FMCG (fast-moving consumer goods) group**. The company's
+name is deliberately not used anywhere in the report or the email that carries it.
 
 ## Output mode (read-only review)
 
@@ -63,8 +64,8 @@ part of the official publication.")
 
 ## Relevance standard
 
-Treat an item as relevant only when it may plausibly affect Henkel Magyarország Kft.,
-its employees, products, contracts, operations, management, compliance duties, or
+Treat an item as relevant only when it may plausibly affect the company, its
+employees, products, contracts, operations, management, compliance duties, or
 group reporting, including:
 
 - Corporate governance, registrations, reporting, and intra-group arrangements.
@@ -81,7 +82,7 @@ group reporting, including:
 - Tax, customs, sanctions, trade controls, real estate, disputes, administrative
   procedure, and enforcement.
 - Hungarian implementation of European Union law requiring coordination with regional
-  or Henkel group functions in Germany.
+  or group functions abroad.
 
 Exclude ceremonial, individual appointment, local-only, and public-sector-only items
 unless they create a credible business impact.
@@ -145,8 +146,8 @@ Put this at the very beginning of the report:
 - Issue number, publication date, and the official source link.
 - A clear statement on whether immediate legal attention is needed.
 - A ranked list of relevant items, highest priority first.
-- For each item: legal act, topic, why it matters to Henkel Magyarország Kft., effective
-  date, and page reference.
+- For each item: legal act, topic, why it matters to the company, effective date, and
+  page reference.
 - A short **Watchlist** section (Megfigyelési lista) for uncertain or lower-priority
   items.
 - A screening ledger listing every item in the issue with its outcome.
@@ -170,7 +171,7 @@ For each relevant item, in priority order, give:
    PDF. Cite the narrowest passage that supports the finding, not a whole page.
 2. **Quoted operative text** — the confirmed legal text, verbatim in Hungarian.
 3. **Joghatás** — the legal effect in plain language.
-4. **Relevancia** — specific relevance to Henkel Magyarország Kft.
+4. **Relevancia** — specific relevance to the company.
 5. **Hatálybalépés** — the effective date.
 6. **Priority.**
 
@@ -198,7 +199,7 @@ exactly.
   the user is using.
 - Use only the official Magyar Közlöny PDF as the primary source for the issue review.
 - Prioritise legal accuracy and traceability over visual polish.
-- Do not infer Henkel business facts that are not known; where applicability turns on a
+- Do not infer business facts that are not known; where applicability turns on a
   business fact this review cannot establish, say so and leave the point open.
 - Treat the output as internal legal triage, not formal legal advice.
 - Use every technical term strictly within the confines of its legal definition, and

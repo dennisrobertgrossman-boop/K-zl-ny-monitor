@@ -1,7 +1,8 @@
 # Közlöny Monitor
 
 Daily legal triage of the newest **Magyar Közlöny** issue for the in-house legal team of
-**Henkel Magyarország Kft.**
+**a Hungarian subsidiary of a multinational FMCG (fast-moving consumer goods) group**.
+The company's name is deliberately not used in the report or the email.
 
 The agent reads the full text of the official Magyar Közlöny PDF **in place** — it does
 not download the file and does not produce an annotated copy — and returns a
@@ -21,11 +22,11 @@ One report per run:
 
 - Issue number, publication date and the direct link to the official PDF.
 - A statement on whether immediate legal attention is needed.
-- Items ranked High / Medium / Low, each with the legal act, why it matters to Henkel
-  Magyarország Kft., effective date, deadline, likely owner, recommended next action and
-  a page reference into the official PDF.
-- A **Group coordination** section for matters needing alignment with Henkel Germany.
+- Items ranked High / Medium / Low, each with the legal act, why it matters to the
+  company, the effective date, a quoted excerpt of the operative text, and a page
+  reference into the official PDF.
 - A **Watchlist** section for uncertain or lower-priority items.
+- A screening ledger covering every item in the issue, relevant or not.
 
 The report is published as an HTML artifact (font family: Segoe UI) where the Artifact
 tool is available, and always given in full in the chat response.
