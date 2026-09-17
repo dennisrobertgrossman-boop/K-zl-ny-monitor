@@ -44,6 +44,27 @@ tool where one is available in the run.
   every element, Segoe UI as the font family. No external stylesheet, no CSS variables
   and no `<style>` block — email clients strip them. Use `<table>` layout rather than
   flex or grid. Supply a plain-text `body` alternative too.
+- **Visual design — warm gold theme.** Apply the same palette to the HTML artifact and
+  the email, as inline styles on every element (Outlook's rendering engine strips
+  `<style>` blocks and does not support gradients, box-shadows, or CSS variables, so
+  none of those carry meaning):
+  - Header band: solid background `#1F1710` (deep espresso), title text `#F0D999`
+    (warm gold), bold.
+  - Page/body background: `#FFFFFF` or `#FFFDF8`; body text `#2B2118` (warm charcoal)
+    — this is the pairing that stays legible in Outlook's light theme, where pale
+    tints on white have read as washed out.
+  - Card and table borders: solid, 1–2px, `#D4B96A` (antique gold). Use borders and
+    rules for structure, not shadows or gradients.
+  - Section headings and links: `#A67C00` (deep gold), bold. Do not set body copy in
+    gold at normal weight on a white background — reserve gold for headings, labels,
+    and short bold accents, where size and weight keep it legible.
+  - Priority badges: solid fill, white bold text — never a pale tint with dark text:
+    **Magas** `#8B1E1E`, **Közepes** `#A67C00`, **Alacsony** `#6B5A2E`, **Kizárva**
+    (screening-ledger only) `#5B5346`.
+  - Counter tiles: the count in its priority colour, bold, on a white or cream tile
+    with a `#D4B96A` top border; the label beneath in small uppercase `#2B2118`.
+  - Avoid rounded corners as anything meaning depends on — Outlook's desktop renderer
+    handles them unpredictably. Plain rectangles and solid fills are the safe default.
 - Pass the HTML **directly, in full, as the `htmlBody` parameter**. Never reference it by
   file path and never use shell substitution such as `$(cat body.html)`: the tool's
   parameter is not a shell, the substitution does not run, and the recipient receives the
@@ -156,9 +177,10 @@ Do not include likely owners, deadlines, recommended next actions, dependency no
 a group-coordination section. The report states what the law says and when it takes
 effect; deciding who acts on it is the reader's.
 
-Use priority marking consistently: red for **Magas** (High), amber for **Közepes**
-(Medium), yellow for **Alacsony** (Low). In HTML output use colour plus a text label; in
-plain text use the text label alone. Meaning must never depend on colour alone.
+Use the priority colours from the visual design section consistently: solid `#8B1E1E`
+for **Magas** (High), `#A67C00` for **Közepes** (Medium), `#6B5A2E` for **Alacsony**
+(Low). In HTML output use colour plus a text label; in plain text use the text label
+alone. Meaning must never depend on colour alone.
 
 ## Step 4 — Per-item findings anchored to the text
 

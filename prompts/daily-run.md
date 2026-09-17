@@ -49,6 +49,15 @@ Módosító jogszabálynál a joghatást magyarázd el, ne a módosító szöveg
 
 **7. Nyelv és forma.** A riport végig **magyarul** készül — a címsorok, összefoglalók, értékelések és a prioritáscímkék (Magas / Közepes / Alacsony) is. Betűtípus: **Segoe UI**. Jelöld meg: „Belső munkapéldány — az észrevételek nem részei a hivatalos közzétételnek." Tedd közzé HTML artifactként **„Magyar Közlöny <év>/<szám>" címmel** — ebből tudja a következő futás, hol tartottál —, és add meg a teljes riportot a válaszban is.
 
+**Vizuális dizájn — arany tematika.** Ugyanazt a színpalettát alkalmazd az artifactban és az e-mailben is, minden elemen beágyazott (inline) stílusként — ne `<style>` blokkban, ne CSS-változóban, mert az Outlook megjelenítője ezeket eltávolítja, és színátmenetet, árnyékot sem támogat megbízhatóan:
+- Fejléc sáv: tömör `#1F1710` (mély eszpresszó) háttér, a cím szövege `#F0D999` (meleg arany), félkövér.
+- Törzs háttér: `#FFFFFF` vagy `#FFFDF8`; a törzsszöveg színe `#2B2118` (meleg antracit) — ez marad olvasható az Outlook világos témájában is, ahol a halvány árnyalatok korábban kimosottnak hatottak.
+- Kártya- és táblázatszegélyek: tömör, 1–2 px vastag `#D4B96A` (antik arany) vonal; a tagolást szegéllyel és elválasztó vonallal old meg, ne árnyékkal vagy színátmenettel.
+- Alcímek és linkek: `#A67C00` (mély arany), félkövéren. Sima törzsszöveget normál vastagságú arany színnel fehér háttéren ne írj — az arany a címsoroké, címkéké és rövid, félkövér kiemeléseké, ahol a méret és a vastagság biztosítja az olvashatóságot.
+- Prioritási jelvények: tömör kitöltés, fehér, félkövér szöveg — soha ne halvány árnyalat sötét szöveggel: **Magas** `#8B1E1E`, **Közepes** `#A67C00`, **Alacsony** `#6B5A2E`, **Kizárva** (csak a szűrési naplóban) `#5B5346`.
+- Számlálócsempék: a szám a saját prioritásszínében, félkövéren, fehér vagy krémszínű mezőn, felül `#D4B96A` szegéllyel; alatta kisméretű, nagybetűs címke `#2B2118` színnel.
+- Kerekített sarkot ne használj olyan helyen, ahol a jelentés attól függne — az Outlook asztali kliense ezt kiszámíthatatlanul jeleníti meg. A biztonságos alapértelmezés az egyszerű téglalap és a tömör kitöltés.
+
 **8. E-mail — minden elkészült riportot el kell küldeni a denes.grossman@henkel.com címre.** Használd a Gmail (vagy más e-mail) eszközt.
 - Tárgy: `Magyar Közlöny <év>. évi <szám>. szám — napi jogi átvilágítás (<n> magas / <n> közepes / <n> alacsony)`
 - Törzs: a teljes riport önhordó HTML-ként (`htmlBody`), minden elemen beágyazott (inline) stílussal, Segoe UI betűtípussal. Külső stíluslap, CSS-változó és `<style>` blokk nem használható — az e-mail kliensek eltávolítják. Flex és grid helyett `<table>` elrendezést használj. Adj meg egyszerű szöveges `body` változatot is.
