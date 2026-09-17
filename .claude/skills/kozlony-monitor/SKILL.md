@@ -41,30 +41,54 @@ tool where one is available in the run.
 - Subject: `Magyar Közlöny <év>. évi <szám>. szám — napi jogi átvilágítás (<n> magas /
   <n> közepes / <n> alacsony)`
 - Body: the full report as a self-contained HTML body (`htmlBody`), inline styles on
-  every element, Segoe UI as the font family. No external stylesheet, no CSS variables
-  and no `<style>` block — email clients strip them. Use `<table>` layout rather than
-  flex or grid. Supply a plain-text `body` alternative too.
-- **Visual design — warm gold theme.** Apply the same palette to the HTML artifact and
-  the email, as inline styles on every element (Outlook's rendering engine strips
-  `<style>` blocks and does not support gradients, box-shadows, or CSS variables, so
-  none of those carry meaning):
-  - Header band: solid background `#1F1710` (deep espresso), title text `#F0D999`
-    (warm gold), bold.
-  - Page/body background: `#FFFFFF` or `#FFFDF8`; body text `#2B2118` (warm charcoal)
-    — this is the pairing that stays legible in Outlook's light theme, where pale
-    tints on white have read as washed out.
-  - Card and table borders: solid, 1–2px, `#D4B96A` (antique gold). Use borders and
-    rules for structure, not shadows or gradients.
-  - Section headings and links: `#A67C00` (deep gold), bold. Do not set body copy in
-    gold at normal weight on a white background — reserve gold for headings, labels,
-    and short bold accents, where size and weight keep it legible.
-  - Priority badges: solid fill, white bold text — never a pale tint with dark text:
-    **Magas** `#8B1E1E`, **Közepes** `#A67C00`, **Alacsony** `#6B5A2E`, **Kizárva**
-    (screening-ledger only) `#5B5346`.
-  - Counter tiles: the count in its priority colour, bold, on a white or cream tile
-    with a `#D4B96A` top border; the label beneath in small uppercase `#2B2118`.
-  - Avoid rounded corners as anything meaning depends on — Outlook's desktop renderer
-    handles them unpredictably. Plain rectangles and solid fills are the safe default.
+  every element, Segoe UI as the font family. No external stylesheet and no CSS
+  variables. Use `<table>` layout rather than flex or grid. Supply a plain-text `body`
+  alternative too. The one permitted `<style>` block is the dark-mode override block
+  described below — Outlook's desktop renderer strips it and falls back to the inline
+  (light) styles, which is the intended behaviour there.
+- **Visual design — warm gold theme, light and dark.** Structure the email as a full
+  HTML document (`<html><head>…</head><body>…</body></html>`), not a bare fragment, so
+  the head can carry the meta tags below. Apply the same palette to the HTML artifact
+  and the email. Give every themed element both an inline style (the light default,
+  read by every client including Outlook) and a class name (read only by clients that
+  support the dark override):
+  - In `<head>`: `<meta name="color-scheme" content="light dark">` and
+    `<meta name="supported-color-schemes" content="light dark">`, plus one `<style>`
+    block containing only:
+    ```
+    @media (prefers-color-scheme: dark) {
+      .bg-page   { background-color: #15110B !important; }
+      .bg-card   { background-color: #241C12 !important; border-color: #B8963E !important; }
+      .text-body { color: #EDE3CC !important; }
+      .text-head { color: #E9C46A !important; }
+      .header-band  { background-color: #241C12 !important; }
+      .header-title { color: #E9C46A !important; }
+      .tile-bg   { background-color: #241C12 !important; }
+      .tile-label{ color: #EDE3CC !important; }
+    }
+    ```
+    No CSS variables inside it — only these class rules, guarded by the media query and
+    `!important` so they can override the inline light styles where the client honours
+    the query, and are otherwise inert.
+  - Light values (the inline defaults, also what Outlook always shows): header band
+    `#1F1710` background with `#F0D999` title text, bold; page/body background
+    `#FFFFFF` or `#FFFDF8` with `#2B2118` body text; card and table borders solid
+    1–2px `#D4B96A`; section headings and links `#A67C00`, bold; counter tiles on a
+    white or cream tile with a `#D4B96A` top border, label `#2B2118`.
+  - Dark values (applied only via the override block above, on top of the same
+    structure): page/body background `#15110B`, body text `#EDE3CC`; card background
+    `#241C12` with `#B8963E` border; header band background `#241C12` with `#E9C46A`
+    title text; headings and links `#E9C46A`; counter tiles on `#241C12` with
+    `#EDE3CC` label text.
+  - Priority badges keep the same solid fill and white bold text in both themes — they
+    carry their own background, so the surrounding theme does not affect their
+    contrast: **Magas** `#8B1E1E`, **Közepes** `#A67C00`, **Alacsony** `#6B5A2E`,
+    **Kizárva** (screening-ledger only) `#5B5346`.
+  - Never rely on a pale tint with dark text for anything — that is what read as
+    washed out in Outlook's light theme. Avoid rounded corners, gradients, and
+    box-shadows as anything meaning depends on; Outlook's desktop renderer handles
+    them unpredictably. Plain rectangles and solid fills are the safe default in
+    either theme.
 - Pass the HTML **directly, in full, as the `htmlBody` parameter**. Never reference it by
   file path and never use shell substitution such as `$(cat body.html)`: the tool's
   parameter is not a shell, the substitution does not run, and the recipient receives the

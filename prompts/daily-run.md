@@ -49,14 +49,26 @@ Módosító jogszabálynál a joghatást magyarázd el, ne a módosító szöveg
 
 **7. Nyelv és forma.** A riport végig **magyarul** készül — a címsorok, összefoglalók, értékelések és a prioritáscímkék (Magas / Közepes / Alacsony) is. Betűtípus: **Segoe UI**. Jelöld meg: „Belső munkapéldány — az észrevételek nem részei a hivatalos közzétételnek." Tedd közzé HTML artifactként **„Magyar Közlöny <év>/<szám>" címmel** — ebből tudja a következő futás, hol tartottál —, és add meg a teljes riportot a válaszban is.
 
-**Vizuális dizájn — arany tematika.** Ugyanazt a színpalettát alkalmazd az artifactban és az e-mailben is, minden elemen beágyazott (inline) stílusként — ne `<style>` blokkban, ne CSS-változóban, mert az Outlook megjelenítője ezeket eltávolítja, és színátmenetet, árnyékot sem támogat megbízhatóan:
-- Fejléc sáv: tömör `#1F1710` (mély eszpresszó) háttér, a cím szövege `#F0D999` (meleg arany), félkövér.
-- Törzs háttér: `#FFFFFF` vagy `#FFFDF8`; a törzsszöveg színe `#2B2118` (meleg antracit) — ez marad olvasható az Outlook világos témájában is, ahol a halvány árnyalatok korábban kimosottnak hatottak.
-- Kártya- és táblázatszegélyek: tömör, 1–2 px vastag `#D4B96A` (antik arany) vonal; a tagolást szegéllyel és elválasztó vonallal old meg, ne árnyékkal vagy színátmenettel.
-- Alcímek és linkek: `#A67C00` (mély arany), félkövéren. Sima törzsszöveget normál vastagságú arany színnel fehér háttéren ne írj — az arany a címsoroké, címkéké és rövid, félkövér kiemeléseké, ahol a méret és a vastagság biztosítja az olvashatóságot.
-- Prioritási jelvények: tömör kitöltés, fehér, félkövér szöveg — soha ne halvány árnyalat sötét szöveggel: **Magas** `#8B1E1E`, **Közepes** `#A67C00`, **Alacsony** `#6B5A2E`, **Kizárva** (csak a szűrési naplóban) `#5B5346`.
-- Számlálócsempék: a szám a saját prioritásszínében, félkövéren, fehér vagy krémszínű mezőn, felül `#D4B96A` szegéllyel; alatta kisméretű, nagybetűs címke `#2B2118` színnel.
-- Kerekített sarkot ne használj olyan helyen, ahol a jelentés attól függne — az Outlook asztali kliense ezt kiszámíthatatlanul jeleníti meg. A biztonságos alapértelmezés az egyszerű téglalap és a tömör kitöltés.
+**Vizuális dizájn — arany tematika, világos és sötét módra egyaránt.** Az e-mailt teljes HTML dokumentumként építsd fel (`<html><head>…</head><body>…</body></html>`), ne csak egy törzstöredékként, hogy a `<head>`-ben elhelyezhesd az alábbi meta-tageket. Ugyanazt a palettát alkalmazd az artifactban és az e-mailben is. Minden témázott elemen adj meg egyszerre inline stílust (ez a világos alapértelmezés, ezt minden kliens — az Outlook is — látja) és egy class nevet (ezt csak a sötét módot támogató kliensek olvassák):
+
+- A `<head>`-ben: `<meta name="color-scheme" content="light dark">` és `<meta name="supported-color-schemes" content="light dark">`, valamint egyetlen `<style>` blokk, kizárólag ezzel a tartalommal:
+  ```
+  @media (prefers-color-scheme: dark) {
+    .bg-page   { background-color: #15110B !important; }
+    .bg-card   { background-color: #241C12 !important; border-color: #B8963E !important; }
+    .text-body { color: #EDE3CC !important; }
+    .text-head { color: #E9C46A !important; }
+    .header-band  { background-color: #241C12 !important; }
+    .header-title { color: #E9C46A !important; }
+    .tile-bg   { background-color: #241C12 !important; }
+    .tile-label{ color: #EDE3CC !important; }
+  }
+  ```
+  Ebben a blokkban CSS-változót ne használj — csak ezeket a class-szabályokat, a media query és az `!important` gondoskodik róla, hogy csak a sötét módot támogató kliensben írják felül az inline világos stílust, máshol (így az Outlookban is, amely a `<style>` blokkot egyébként eltávolítja) hatástalanok maradnak.
+- Világos értékek (az inline alapértelmezés, ezt látja mindig az Outlook is): fejléc sáv tömör `#1F1710` háttér, `#F0D999` félkövér címszöveg; törzs háttér `#FFFFFF` vagy `#FFFDF8`, törzsszöveg `#2B2118`; kártya- és táblázatszegély tömör, 1–2 px, `#D4B96A`; alcímek és linkek `#A67C00`, félkövéren; számlálócsempe fehér vagy krémszínű mezőn `#D4B96A` felső szegéllyel, címke `#2B2118`.
+- Sötét értékek (csak a fenti override blokkon keresztül érvényesülnek, ugyanazon a szerkezeten): törzs háttér `#15110B`, törzsszöveg `#EDE3CC`; kártya háttér `#241C12`, szegély `#B8963E`; fejléc sáv háttér `#241C12`, címszöveg `#E9C46A`; alcímek és linkek `#E9C46A`; számlálócsempe háttér `#241C12`, címke `#EDE3CC`.
+- A prioritási jelvények mindkét témában azonosak — saját tömör háttérszínt hordoznak, ezért a környező téma nem befolyásolja a kontrasztjukat: **Magas** `#8B1E1E`, **Közepes** `#A67C00`, **Alacsony** `#6B5A2E`, **Kizárva** (csak a szűrési naplóban) `#5B5346`, mindegyik fehér, félkövér szöveggel.
+- Halvány árnyalatot sötét szöveggel sehol ne használj — ez hatott kimosottnak az Outlook világos témájában. Kerekített sarkot, színátmenetet és árnyékot ne használj olyan helyen, ahol a jelentés ettől függne — az Outlook asztali kliense ezeket kiszámíthatatlanul jeleníti meg. A biztonságos alapértelmezés mindkét témában az egyszerű téglalap és a tömör kitöltés.
 
 **8. E-mail — minden elkészült riportot el kell küldeni a denes.grossman@henkel.com címre.** Használd a Gmail (vagy más e-mail) eszközt.
 - Tárgy: `Magyar Közlöny <év>. évi <szám>. szám — napi jogi átvilágítás (<n> magas / <n> közepes / <n> alacsony)`
