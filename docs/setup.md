@@ -32,7 +32,7 @@ published.
 
 ## Delivery
 
-- Email to **denes.grossman@henkel.com** — the primary deliverable. Full report as a
+- Email to **denes.grossman@henkel.com** and **ferenc.sarkozi@henkel.com** (one message) — the primary deliverable. Full report as a
   self-contained HTML body with inline styles; never the artifact link, which is private
   and will not open for an external recipient.
 - HTML artifact, font family Segoe UI, where the Artifact tool is available in the run.
@@ -104,7 +104,7 @@ messages with the Gmail connector, logs them to the Google Drive document "Közl
 kalibrációs napló", labels them `KV-feldolgozott`, and uses the log as precedent when
 rating. The Routine therefore needs the **Gmail** connector (search and label, not only
 send) and the **Google Drive** connector attached. Feedback is accepted only from
-denes.grossman@henkel.com and dennisrobertgrossman@gmail.com.
+denes.grossman@henkel.com, ferenc.sarkozi@henkel.com and dennisrobertgrossman@gmail.com.
 
 ### 4. Optional: the Lawstronaut connector
 

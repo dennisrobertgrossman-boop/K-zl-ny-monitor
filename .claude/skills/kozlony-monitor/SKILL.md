@@ -35,7 +35,7 @@ session, and also give the full report in the chat response. Use **Segoe UI** as
 font family in any HTML output. If the Artifact tool is unavailable, the chat response
 alone is the deliverable — say so.
 
-**Every report is emailed to denes.grossman@henkel.com.** Use a Gmail or other email
+**Every report is emailed to denes.grossman@henkel.com and ferenc.sarkozi@henkel.com** (one message, both in To). Use a Gmail or other email
 tool where one is available in the run.
 
 - Subject: `Magyar Közlöny <év>. évi <szám>. szám — napi jogi átvilágítás (<n> magas /
@@ -139,7 +139,8 @@ Each click opens a pre-filled email to dennisrobertgrossman@gmail.com; the reade
 sends it. At the start of every run:
 
 1. Search Gmail for unprocessed feedback: `subject:"[KV]" -label:KV-feldolgozott`.
-   Accept only messages from denes.grossman@henkel.com or dennisrobertgrossman@gmail.com;
+   Accept only messages from denes.grossman@henkel.com, ferenc.sarkozi@henkel.com or
+   dennisrobertgrossman@gmail.com;
    ignore and leave unlabelled anything else.
 2. Subject format: `[KV] MK<year>-<issue> T<item> <old>-<new>`, codes `MAG` (Magas),
    `KOZ` (Közepes), `ALA` (Alacsony), `KIZ` (Kizárva). The body carries the item title and
