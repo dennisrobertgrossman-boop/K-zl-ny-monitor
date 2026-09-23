@@ -96,7 +96,17 @@ interface** with the **Gmail** connector attached, using the prompt in
 `prompts/daily-run.md`, then delete the tool-created Routine. Until that is done, each run
 reports at the top of its response that it could not send the email.
 
-### 3. Optional: the Lawstronaut connector
+### 3. Required for the feedback loop: Gmail read access and the Google Drive connector
+
+Readers re-categorize items by clicking a button in the email, which opens a pre-filled
+message to dennisrobertgrossman@gmail.com (subject prefix `[KV]`). Each run reads those
+messages with the Gmail connector, logs them to the Google Drive document "Közlöny
+kalibrációs napló", labels them `KV-feldolgozott`, and uses the log as precedent when
+rating. The Routine therefore needs the **Gmail** connector (search and label, not only
+send) and the **Google Drive** connector attached. Feedback is accepted only from
+denes.grossman@henkel.com and dennisrobertgrossman@gmail.com.
+
+### 4. Optional: the Lawstronaut connector
 
 Where the Lawstronaut connector is authorised for the account, the agent can use it as a
 secondary route to the corpus. It is not a substitute for the official PDF: the official
