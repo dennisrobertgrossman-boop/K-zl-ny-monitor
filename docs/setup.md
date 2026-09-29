@@ -117,3 +117,26 @@ Magyar Közlöny PDF remains the primary source for the issue review.
 Edit `.claude/skills/kozlony-monitor/SKILL.md`. If the change affects what the fresh
 session must know without the repository, mirror it in `prompts/daily-run.md` and update
 the Routine's prompt.
+
+## GVH monitor (second Routine)
+
+A separate Routine watches the Hungarian Competition Authority (Gazdasági Versenyhivatal)
+on gvh.hu. Its prompt is `prompts/gvh-run.md`; its summary is
+`.claude/skills/gvh-monitor/SKILL.md`.
+
+- **Schedule:** Tuesday, Wednesday and Thursday, 08:00 Budapest time (cron `0 6 * * 2-4`
+  in UTC during summer time; the local hour shifts by one in winter, as with the
+  Közlöny Routine).
+- **Environment:** the same "Közlöny monitor" environment, with `gvh.hu` and `*.gvh.hu`
+  added to the Custom allowed domains. Verified reachable on 2026-09-29, including a
+  decision PDF downloaded from its `/pfile/file` link and read with `pdftotext`.
+- **Connectors:** Gmail (send, search, label) and Google Drive. Create the Routine from the
+  claude.ai Routines interface so the connectors can be attached.
+- **Delivery:** an email to denes.grossman@henkel.com only when a new relevant item
+  appears; otherwise nothing is sent.
+- **State and feedback:** Google Drive documents "GVH figyelő — feldolgozott tételek" and
+  "GVH kalibrációs napló"; feedback subject prefix `[GVH]`, processed label
+  `GVH-feldolgozott`.
+- **Legal Data Hunter:** supplementary only. On 2026-09-29 the connector returned "You've
+  used today's quota on your Free plan", so it cannot be the primary source of a
+  scheduled job.

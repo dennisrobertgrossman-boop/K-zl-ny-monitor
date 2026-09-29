@@ -15,6 +15,8 @@ prioritised, page-referenced review report.
 | `.claude/skills/kozlony-monitor/SKILL.md` | The agent's instructions. Invocable in a session as `/kozlony-monitor`. |
 | `prompts/daily-run.md` | The standalone message the scheduled Routine sends each morning. |
 | `docs/setup.md` | Schedule, delivery, and the network and connector prerequisites. |
+| `.claude/skills/gvh-monitor/SKILL.md` | Summary of the second monitor, for the Hungarian Competition Authority (GVH). Invocable as `/gvh-monitor`. |
+| `prompts/gvh-run.md` | The standalone message the GVH Routine sends on Tuesday–Thursday mornings. |
 
 ## What it produces
 
@@ -39,4 +41,4 @@ részei a hivatalos közzétételnek."*
 
 ## Running it manually
 
-In a session in this repository: `/kozlony-monitor`
+In a session in this repository: `/kozlony-monitor` or `/gvh-monitor`
