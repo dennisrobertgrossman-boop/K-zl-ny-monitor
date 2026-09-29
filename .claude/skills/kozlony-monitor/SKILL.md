@@ -5,6 +5,10 @@ description: Daily legal triage of the newest Magyar Közlöny issue for the in-
 
 # Magyar Közlöny daily review — FMCG subsidiary legal team
 
+The Routine runs the Hungarian prompt in `prompts/daily-run.md`, which is self-contained
+and holds the exact HTML (HyperText Markup Language) building blocks of the report. This file is the English
+reference for the same design; where the two differ, the prompt is authoritative.
+
 ## Purpose
 
 Find the newest official **Magyar Közlöny** issue, read its entire text, and turn it
@@ -14,89 +18,46 @@ name is deliberately not used anywhere in the report or the email that carries i
 
 ## Output mode (read-only review)
 
-This agent does **not** download the PDF and does **not** produce an annotated copy.
+This agent does **not** download the PDF (Portable Document Format) file and does **not** produce an annotated copy.
 It reads the full text of the official PDF in place and delivers a written report.
 
 **Deliverable:** one page-referenced review report, containing:
 
 1. The verified identification of the issue (number, publication date) and the direct
    link to the official PDF on the official Magyar Közlöny website.
-2. The top-of-report briefing (Section 3 below).
-3. The per-item findings, each anchored to the page and section where the underlying
-   text appears in the official PDF (Section 4 below).
+2. The top-of-report briefing (Step 3 below).
+3. One card per relevant item, anchored to the page where the underlying text appears
+   in the official PDF (Step 4 below).
 
 **The report is written in Hungarian.** Every part of it — headings, summaries,
-assessments, owner names, priority labels, the method and limitations section — is in
-Hungarian. The chat response that accompanies it is written in the language the user is
-using in the conversation.
+assessments, category labels, the method and limitations section — is in Hungarian.
+The chat response that accompanies it is written in the language the user is using in
+the conversation.
 
-Publish the report as an HTML artifact when the Artifact tool is available in the
-session, and also give the full report in the chat response. Use **Segoe UI** as the
-font family in any HTML output. If the Artifact tool is unavailable, the chat response
-alone is the deliverable — say so.
+Publish the report as an HTML artifact titled "Magyar Közlöny <year>/<issue>" when the
+Artifact tool is available in the session — the next run finds its starting point from
+these titles — and also give the full report in the chat response. Use **Segoe UI** as
+the font family in any HTML output. If the Artifact tool is unavailable, the chat
+response alone is the deliverable — say so.
 
-**Every report is emailed to denes.grossman@henkel.com and ferenc.sarkozi@henkel.com** (one message, both in To). Use a Gmail or other email
-tool where one is available in the run.
+**Every report is emailed to denes.grossman@henkel.com and ferenc.sarkozi@henkel.com**
+(one message, both in To). Use a Gmail or other email tool where one is available in
+the run.
 
 - Subject: `Magyar Közlöny <év>. évi <szám>. szám — napi jogi átvilágítás (<n> magas /
   <n> közepes / <n> alacsony)`
-- Body: the full report as a self-contained HTML body (`htmlBody`), inline styles on
-  every element, Segoe UI as the font family. No external stylesheet and no CSS
-  variables. Use `<table>` layout rather than flex or grid. Supply a plain-text `body`
-  alternative too. The one permitted `<style>` block is the dark-mode override block
-  described below — Outlook's desktop renderer strips it and falls back to the inline
-  (light) styles, which is the intended behaviour there.
-- **Visual design — warm gold theme, light and dark.** Structure the email as a full
-  HTML document (`<html><head>…</head><body>…</body></html>`), not a bare fragment, so
-  the head can carry the meta tags below. Apply the same palette to the HTML artifact
-  and the email. Give every themed element both an inline style (the light default,
-  read by every client including Outlook) and a class name (read only by clients that
-  support the dark override):
-  - In `<head>`: `<meta name="color-scheme" content="light dark">` and
-    `<meta name="supported-color-schemes" content="light dark">`, plus one `<style>`
-    block containing only:
-    ```
-    @media (prefers-color-scheme: dark) {
-      .bg-page   { background-color: #15110B !important; }
-      .bg-card   { background-color: #241C12 !important; border-color: #B8963E !important; }
-      .text-body { color: #EDE3CC !important; }
-      .text-head { color: #E9C46A !important; }
-      .header-band  { background-color: #241C12 !important; }
-      .header-title { color: #E9C46A !important; }
-      .tile-bg   { background-color: #241C12 !important; }
-      .tile-label{ color: #EDE3CC !important; }
-    }
-    ```
-    No CSS variables inside it — only these class rules, guarded by the media query and
-    `!important` so they can override the inline light styles where the client honours
-    the query, and are otherwise inert.
-  - Light values (the inline defaults, also what Outlook always shows): header band
-    `#1F1710` background with `#F0D999` title text, bold; page/body background
-    `#FFFFFF` or `#FFFDF8` with `#2B2118` body text; card and table borders solid
-    1–2px `#D4B96A`; section headings and links `#A67C00`, bold; counter tiles on a
-    white or cream tile with a `#D4B96A` top border, label `#2B2118`.
-  - Dark values (applied only via the override block above, on top of the same
-    structure): page/body background `#15110B`, body text `#EDE3CC`; card background
-    `#241C12` with `#B8963E` border; header band background `#241C12` with `#E9C46A`
-    title text; headings and links `#E9C46A`; counter tiles on `#241C12` with
-    `#EDE3CC` label text.
-  - Priority badges keep the same solid fill and white bold text in both themes — they
-    carry their own background, so the surrounding theme does not affect their
-    contrast: **Magas** `#8B1E1E`, **Közepes** `#A67C00`, **Alacsony** `#6B5A2E`,
-    **Kizárva** (screening-ledger only) `#5B5346`.
-  - Never rely on a pale tint with dark text for anything — that is what read as
-    washed out in Outlook's light theme. Avoid rounded corners, gradients, and
-    box-shadows as anything meaning depends on; Outlook's desktop renderer handles
-    them unpredictably. Plain rectangles and solid fills are the safe default in
-    either theme.
+- Body: the full report as a self-contained HTML body (`htmlBody`) built from the
+  building blocks in the prompt, plus a plain-text `body` alternative with the same
+  labels in the same order.
+- Before sending, write the HTML to `email.html` and run the check script from the
+  prompt: it flags any white text or background colour that is not on a `<td>` carrying
+  a `bgcolor` attribute, and counts the card sections. Fix every flagged tag first.
 - Pass the HTML **directly, in full, as the `htmlBody` parameter**. Never reference it by
   file path and never use shell substitution such as `$(cat body.html)`: the tool's
   parameter is not a shell, the substitution does not run, and the recipient receives the
-  literal `$(cat ...)` text. If the report was written to a file first, read it back and
-  paste the content into the parameter.
-- One report, one email. Verify the body is the finished HTML before sending. If a broken
-  message did go out, send the correction as a reply in the same thread
-  (`replyThreadId`), not as a new thread.
+  literal `$(cat ...)` text. Read the checked file back and paste its content.
+- One report, one email. If a broken message did go out, send the correction as a reply
+  in the same thread (`replyThreadId`), not as a new thread.
 - Never send the artifact link as the deliverable: the artifact is private and will not
   open for an external recipient.
 - If no email tool is available in the run, say so plainly at the top of the chat
@@ -106,6 +67,37 @@ Never present the report as the official publication, and never restate it as if
 were the text of the issue. Label it: **"Belső munkapéldány — az észrevételek nem
 részei a hivatalos közzétételnek."** ("Internal working copy — annotations are not
 part of the official publication.")
+
+## Visual design — warm gold theme, light and dark
+
+- A full HTML document with `<meta charset="utf-8">`, `color-scheme` and
+  `supported-color-schemes` meta tags, and exactly one `<style>` block holding only the
+  dark-mode override rules (`.bg-page`, `.bg-card`, `.tile-bg`, `.text-body`,
+  `.text-head`, `.header-band`, `.header-title`) inside
+  `@media (prefers-color-scheme: dark)`. No CSS (Cascading Style Sheets) variables.
+- Colours are always inline (the light default every client shows); the class rules
+  only override them where a client supports dark mode. Colour never depends on a class
+  or the `<style>` block alone.
+- **A background colour sits only on a `<td>` (apart from `<body>`), given twice: as a
+  `bgcolor` attribute and as inline `background-color`.** Never on `<span>`, `<a>`,
+  `<div>` or `<p>` — Outlook's desktop client does not render those reliably, and white
+  text then disappears on white. In the sent copies of both GVH reports of 2026-09-29,
+  the badges and buttons carried white text with no background colour at all. Every
+  band, badge and button is therefore a coloured table cell, and white text
+  appears only in a cell coloured with a category colour.
+- `<table>` layout only, 680 px content width, spacing by cell padding or spacer rows,
+  line heights in pixels, `font-family:'Segoe UI',Arial,sans-serif` on every text cell.
+  No rounded corners, gradients, shadows, or pale tints behind dark text.
+- Palette (light inline → dark override): page `#FFFFFF` → `#15110B`; card `#FFFFFF`
+  with a solid 1 px `#D4B96A` border → `#241C12` with `#B8963E`; summary box and counter
+  tiles `#FFFFFF` → `#241C12`; body text `#2B2118` → `#EDE3CC`; headings, field labels
+  and links `#946B00` bold → `#E9C46A`; header band `#1F1710` with `#F0D999` text →
+  `#241C12` with `#E9C46A`.
+- Category colours, identical in both themes, always with white bold text: **Magas**
+  `#8B1E1E`, **Közepes** `#946B00`, **Alacsony** `#6B5A2E`, **Kizárva** `#5B5346`.
+  `#946B00` replaced the earlier `#A67C00`, whose contrast with white text (about
+  3.8 : 1) was below the 4.5 : 1 that small text needs. Meaning never depends on colour
+  alone: every coloured element also carries its text label.
 
 ## Relevance standard
 
@@ -126,8 +118,7 @@ group reporting, including:
   and regulatory reporting.
 - Tax, customs, sanctions, trade controls, real estate, disputes, administrative
   procedure, and enforcement.
-- Hungarian implementation of European Union law requiring coordination with regional
-  or group functions abroad.
+- Hungarian implementation of European Union law.
 
 Exclude ceremonial, individual appointment, local-only, and public-sector-only items
 unless they create a credible business impact.
@@ -140,8 +131,7 @@ sends it. At the start of every run:
 
 1. Search Gmail for unprocessed feedback: `subject:"[KV]" -label:KV-feldolgozott`.
    Accept only messages from denes.grossman@henkel.com, ferenc.sarkozi@henkel.com or
-   dennisrobertgrossman@gmail.com;
-   ignore and leave unlabelled anything else.
+   dennisrobertgrossman@gmail.com; ignore and leave unlabelled anything else.
 2. Subject format: `[KV] MK<year>-<issue> T<item> <old>-<new>`, codes `MAG` (Magas),
    `KOZ` (Közepes), `ALA` (Alacsony), `KIZ` (Kizárva). The body carries the item title and
    an optional "Indoklás" (reason) line.
@@ -157,26 +147,27 @@ sends it. At the start of every run:
 
 **Calibration.** Before rating items (Step 2), read the whole calibration log and treat
 past human re-categorizations as precedent: rate similar items (same subject matter,
-issuing body or act type) in the same direction unless the legal text rules it out.
-Feedback may move relevance judgments; it never changes what the legal text says. Where a
-precedent conflicts with the text, the text wins — note it under Módszertan és korlátok.
-Mark any rating influenced by a precedent "(korábbi visszajelzés alapján)" in its
-Relevancia field (or the ledger outcome for an excluded item). Módszertan és korlátok
-carries one line: "Kalibráció: <N> visszajelzés a naplóban, ebből <M> új ebben a futásban."
+issuing body or act type) in the same direction unless the official text rules it out.
+Feedback may move relevance judgments; it never changes what the official text says.
+Where a precedent conflicts with the text, the text wins — note it under Módszertan és
+korlátok. Mark any rating influenced by a precedent "(korábbi visszajelzés alapján)" in
+the item's "Miért releváns" section (or in the ledger's Eredmény column for an excluded
+item). Módszertan és korlátok carries one line: "Kalibráció: <N> visszajelzés a
+naplóban, ebből <M> új ebben a futásban."
 
 ## Step 1 — Locate and verify the newest issue
 
 **Goal:** select the correct official publication.
 
-1. Open the official Magyar Közlöny website (https://magyarkozlony.hu/) from the
-   configured knowledge source.
+1. Open the official Magyar Közlöny website (https://magyarkozlony.hu/) with `curl`.
 2. Identify the most recently published **Magyar Közlöny** issue — not a different
    official gazette (such as Hivatalos Értesítő) and not a supplement.
 3. Verify its issue number, publication date, title, and direct official PDF link.
 4. Do **not** download or store the PDF. Record the direct official link.
-5. Compare against the previous run's covered issue where that is known. If more than
-   one issue was published since the previous run, review each of them, newest first,
-   and report them in one package.
+5. Find the previous run's last issue from the published artifacts titled
+   "Magyar Közlöny <year>/<issue>". If more than one issue was published since then,
+   review each of them, newest first. If there is no such artifact, review only the
+   newest issue.
 
 Continue only after the issue and the official PDF link are verified. If verification
 fails, follow Error handling.
@@ -203,14 +194,17 @@ fails, follow Error handling.
    same way (`curl -sSL https://magyarkozlony.hu/`) rather than with WebFetch.
 2. Keep track of the page number of every passage you rely on, so each finding can be
    cited back to the issue.
-3. For each potentially relevant legal act or provision, verify its official title,
-   identifier, affected legislation, effective date, deadlines, and transitional rules.
-4. Separate confirmed legal text from interpretation. Quote or closely paraphrase the
-   operative text, then keep your assessment in a clearly marked separate field.
+3. For each potentially relevant item, verify its official title, identifier, affected
+   legislation, entry into force, and transitional rules.
+4. Separate confirmed text from interpretation: the summary, legal effect and entry
+   into force state only what the official text establishes; assessment goes only into
+   the "Miért releváns" section.
 5. Rate each item:
-   - **High** — likely action, deadline, material exposure, or immediate escalation.
-   - **Medium** — assessment, monitoring, or business-owner confirmation is needed.
-   - **Low** — remote or contextual relevance worth recording.
+   - **Magas** (High) — likely action or material exposure.
+   - **Közepes** (Medium) — assessment or confirmation is needed.
+   - **Alacsony** (Low) — remote or contextual relevance.
+   - **Kizárva** (Excluded) — outside the relevance standard; the reason goes in the
+     screening ledger.
 If the whole text cannot be read in one pass, read it in ordered segments and confirm
 in the report that the entire issue was covered, page range by page range.
 
@@ -218,24 +212,32 @@ in the report that the entire issue was covered, page range by page range.
 
 **Goal:** make the most important findings visible immediately.
 
-Put this at the very beginning of the report:
+Put this at the very beginning of the report, in this order:
 
-- Issue number, publication date, and the official source link.
-- A clear statement on whether immediate legal attention is needed.
-- A ranked list of relevant items, highest priority first.
-- For each item: legal act, topic, why it matters to the company, effective date, and
-  page reference.
-- A short **Watchlist** section (Megfigyelési lista) for uncertain or lower-priority
-  items.
-- A screening ledger listing every item in the issue with its outcome. Number items
-  `T01`, `T02`, … in issue order, and add an **Átsorolás** (re-categorize) column.
+- **Header band:** issue number, publication date, page range, item count, the link to
+  the official PDF, and the internal-working-copy label.
+- **Summary box:** "Azonnali jogi teendő: Igen." or "Azonnali jogi teendő: Nem."
+  (immediate legal action needed: yes or no), followed by at most one sentence of reason.
+- **Counter tiles:** the number of Magas / Közepes / Alacsony / Kizárva items, each tile
+  topped with its category colour.
+- **Áttekintés** (overview) — only when there are at least three relevant items: one
+  line per item with a category badge, item number, short title and page.
 
-**Re-categorization buttons** (email and artifact alike). In every ledger row, the
-Átsorolás column shows four options — Magas, Közepes, Alacsony, Kizárva:
+After the item cards (Step 4) come:
 
-- The current category is not a link: a solid badge reading "✓ <category>". The other
-  three are `mailto:` links styled as solid badges in their own priority colour, white
-  bold text, "→ <category>", side by side in separate table cells, no rounded corners.
+- **Szűrési napló** (screening ledger): every item in the issue, numbered `T01`, `T02`,
+  … in issue order, in four columns — Az. (number), Tárgy (subject, with the page below
+  in smaller type), Eredmény (the category, or "Kizárva — <reason>"), Átsorolás
+  (re-categorization buttons).
+- **Módszertan és korlátok** (method and limitations).
+
+**Re-categorization buttons** (email and artifact alike). The Átsorolás column shows
+three buttons: the three categories other than the item's current one (which the
+Eredmény column already shows).
+
+- Each button is a table cell coloured with the target category's colour (`bgcolor`
+  plus inline `background-color`) holding a `mailto:` link in white bold text,
+  "→ <category>".
 - Above the table: "Nem értesz egyet egy besorolással? Kattints a helyes kategóriára —
   megnyílik egy előre kitöltött e-mail, amelyhez indoklást is írhatsz (nem kötelező);
   utána csak küldd el."
@@ -254,45 +256,48 @@ Put this at the very beginning of the report:
 - In the plain-text `body`, list the ready-made subject lines per item instead.
 
 Do not include likely owners, deadlines, recommended next actions, dependency notes, or
-a group-coordination section. The report states what the law says and when it takes
+a group-coordination section. The report states what the text says and when it takes
 effect; deciding who acts on it is the reader's.
 
-Use the priority colours from the visual design section consistently: solid `#8B1E1E`
-for **Magas** (High), `#A67C00` for **Közepes** (Medium), `#6B5A2E` for **Alacsony**
-(Low). In HTML output use colour plus a text label; in plain text use the text label
-alone. Meaning must never depend on colour alone.
+## Step 4 — One card per relevant item
 
-## Step 4 — Per-item findings anchored to the text
+**Goal:** make each relevant item readable on its own, with the category, the summary
+and the supporting detail clearly separated.
 
-**Goal:** put the explanation next to the provision it explains, by reference.
+Every non-excluded item gets a card, ordered Magas, Közepes, Alacsony, and by page
+within a category. Every card has the same parts, in this order:
 
-For each relevant item, in priority order, give:
+1. **Category band** in the category colour: "<KATEGÓRIA> RELEVANCIA · T<nn> · <page>.
+   oldal".
+2. **Title:** a short plain-language title (about 12 words at most), with the official
+   Hungarian name of the act below it, verbatim, in smaller type.
+3. **ÖSSZEFOGLALÓ** (summary): at most three sentences on what the act contains —
+   factual, from the official text, no assessment.
+4. **MIÉRT RELEVÁNS (SAJÁT ÉRTÉKELÉS)** (why it is relevant — own assessment): at most
+   three sentences.
+5. **RÉSZLETEK** (details): a table with exactly four rows — **Joghatás** (which rights
+   or obligations arise, change or end, and for whom; for an amendment, the effect, not
+   the amending wording), **Hatálybalépés** (entry into force), **Forrás** (the official
+   PDF link and page), **Idézet** (the narrowest supporting passage, verbatim, with the
+   provision and page).
 
-1. **Anchor** — page number (and where useful, section/§ number and the opening words
-   of the passage) of the first substantive appearance of the provision in the official
-   PDF. Cite the narrowest passage that supports the finding, not a whole page.
-2. **Quoted operative text** — the confirmed legal text, verbatim in Hungarian.
-3. **Joghatás** — the legal effect in plain language.
-4. **Relevancia** — specific relevance to the company.
-5. **Hatálybalépés** — the effective date.
-6. **Priority.**
-
-These are the only per-item fields. For amendments, explain the legal effect rather than
-merely repeating the amending text. Preserve official Hungarian titles and identifiers
+These are the only per-item parts. Preserve official Hungarian titles and identifiers
 exactly.
 
 ## Step 5 — Validate and deliver
 
 1. Confirm the issue reviewed is the newest Magyar Közlöny issue and the link points to
    the official PDF.
-2. Confirm every briefing item cites the correct page and matches its per-item finding.
+2. Confirm every card cites the correct page and matches the ledger.
 3. Confirm every summary is grounded in text actually visible in the issue.
-4. Deliver the report (artifact link where available, plus the full report in chat).
-5. State in the chat response: the issue reviewed, the number of High / Medium / Low
-   items, how many feedback messages were processed, and any limitations.
-6. If no new issue has been published since the previous run, **produce no report** — no
-   artifact, no briefing, no ledger, and no email (Step 0 feedback logging still runs). Reply with one line naming the most
-   recent issue and its date, and stop there.
+4. Run the pre-send check script and fix everything it flags.
+5. Deliver the report (artifact link where available, plus the full report in chat).
+6. State in the chat response: the issue reviewed, the number of Magas / Közepes /
+   Alacsony items, how many feedback messages were processed, whether the email was
+   sent, and any limitations.
+7. If no new issue has been published since the previous run, **produce no report** — no
+   artifact, no briefing, no ledger, and no email (Step 0 feedback logging still runs).
+   Reply with one line naming the most recent issue and its date, and stop there.
 
 ## General guidelines
 

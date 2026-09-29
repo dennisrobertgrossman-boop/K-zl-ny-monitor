@@ -1,37 +1,50 @@
 # Közlöny Monitor
 
-Daily legal triage of the newest **Magyar Közlöny** issue for the in-house legal team of
-**a Hungarian subsidiary of a multinational FMCG (fast-moving consumer goods) group**.
-The company's name is deliberately not used in the report or the email.
+Two scheduled legal-triage agents for the in-house legal team of **a Hungarian
+subsidiary of a multinational FMCG (fast-moving consumer goods) group**. The company's
+name is deliberately not used in the reports or the emails.
 
-The agent reads the full text of the official Magyar Közlöny PDF **in place** — it does
-not download the file and does not produce an annotated copy — and returns a
-prioritised, page-referenced review report.
+- **Magyar Közlöny monitor** — every morning, reviews each new Magyar Közlöny issue.
+  It reads the full text of the official PDF (Portable Document Format) **in place** —
+  it does not download the file and does not produce an annotated copy — and returns a
+  prioritised, page-referenced review report.
+- **GVH monitor** — on Tuesday, Wednesday and Thursday mornings, reviews new
+  publications of the Hungarian Competition Authority (Gazdasági Versenyhivatal, GVH) on
+  gvh.hu, and emails a report only when a new relevant item appears.
 
 ## Contents
 
 | Path | What it is |
 | --- | --- |
-| `.claude/skills/kozlony-monitor/SKILL.md` | The agent's instructions. Invocable in a session as `/kozlony-monitor`. |
-| `prompts/daily-run.md` | The standalone message the scheduled Routine sends each morning. |
-| `docs/setup.md` | Schedule, delivery, and the network and connector prerequisites. |
-| `.claude/skills/gvh-monitor/SKILL.md` | Summary of the second monitor, for the Hungarian Competition Authority (GVH). Invocable as `/gvh-monitor`. |
+| `prompts/daily-run.md` | The standalone message the Magyar Közlöny Routine sends each morning. |
 | `prompts/gvh-run.md` | The standalone message the GVH Routine sends on Tuesday–Thursday mornings. |
+| `.claude/skills/kozlony-monitor/SKILL.md` | English reference for the Magyar Közlöny monitor. Invocable in a session as `/kozlony-monitor`. |
+| `.claude/skills/gvh-monitor/SKILL.md` | English summary of the GVH monitor. Invocable as `/gvh-monitor`. |
+| `docs/setup.md` | Schedules, delivery, and the network and connector prerequisites. |
+
+The prompts are authoritative: they are what the Routines actually run, and they hold
+the exact HTML (HyperText Markup Language) building blocks of the email.
 
 ## What it produces
 
-One report per run:
+One report per new Magyar Közlöny issue, and one per GVH run that finds a relevant
+item, in Hungarian:
 
-- Issue number, publication date and the direct link to the official PDF.
-- A statement on whether immediate legal attention is needed.
-- Items ranked High / Medium / Low, each with the legal act, why it matters to the
-  company, the effective date, a quoted excerpt of the operative text, and a page
-  reference into the official PDF.
-- A **Watchlist** section for uncertain or lower-priority items.
-- A screening ledger covering every item in the issue, relevant or not.
+- A header with the issue (or, for the GVH monitor, the period reviewed) and a link to
+  the official source.
+- A one-line statement on whether immediate legal action is needed, and counters of
+  Magas / Közepes / Alacsony / Kizárva (High / Medium / Low / Excluded) items.
+- One card per relevant item, always in the same order: a coloured category band, the
+  title, a factual summary, the relevance assessment (marked as the reviewer's own), and
+  a details table — legal effect, entry into force or status, source, and a verbatim
+  quotation with its page reference.
+- A screening ledger covering every item, relevant or not, with buttons that open a
+  pre-filled email to re-categorize an item; the next runs treat that feedback as
+  precedent.
 
-The report is published as an HTML artifact (font family: Segoe UI) where the Artifact
-tool is available, and always given in full in the chat response.
+The report is emailed as the primary deliverable, published as an HTML artifact (font
+family: Segoe UI) where the Artifact tool is available, and always given in full in the
+chat response of the run.
 
 ## What it is not
 

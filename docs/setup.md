@@ -1,76 +1,100 @@
 # Setup
 
-## Schedule
+Both monitors run as Claude Routines created in the claude.ai Routines interface. Each
+firing starts a **fresh session** and sends it the Routine's prompt, which is the text
+below the horizontal rule in the matching file in `prompts/`.
 
-The agent runs as a Claude Routine named **Közlöny monitor email feladat**, created from
-the claude.ai Routines interface. It starts a **fresh session on each firing** and sends
-it the message in `prompts/daily-run.md`.
+| Routine | Prompt | Schedule (cron, UTC) | Connectors it needs |
+| --- | --- | --- | --- |
+| **Közlöny monitor email feladat** | `prompts/daily-run.md` | `0 7 * * *` — every day | Gmail, Google Drive |
+| **GVH figyelő email feladat** | `prompts/gvh-run.md` | `0 7 * * 2-4` — Tuesday to Thursday | Gmail, Google Drive, Legal Data Hunter (optional) |
 
-- Cron: `0 7 * * *` — evaluated in Coordinated Universal Time (UTC).
-- That is **09:00 Budapest time during Central European Summer Time** and **08:00 during
-  Central European Time**. Cron schedules are stored in UTC and do not follow the
-  Hungarian daylight-saving transition, so the local hour shifts by one in winter; change
-  the expression at the transition if a fixed local hour matters.
-- It runs every day. Magyar Közlöny is normally published on working days; on a day with
-  no new issue the run produces nothing and stops after a one-line note.
+## Schedule and time zone
 
-Push notifications are enabled on the Routine. The report itself arrives by email, not
-through the notification.
+A cron expression without a prefix is evaluated in Coordinated Universal Time (UTC), so
+`0 7` means **09:00 Budapest time during Central European Summer Time** but **08:00
+during Central European Time**, which starts on **25 October 2026**. To keep 09:00
+Budapest time all year, set the schedules to:
 
-The Routine must be created and edited from the claude.ai Routines interface: a Routine
-created there cannot be updated or fired by an agent (`update_trigger` and `fire_trigger`
-both refuse it with *"Agents can only update routines they created"*). To test a change,
-edit the prompt in that interface and use **Run now**.
+```
+CRON_TZ=Europe/Budapest 0 9 * * *
+CRON_TZ=Europe/Budapest 0 9 * * 2-4
+```
 
-## Verified
+The scheduler accepts the `CRON_TZ=` prefix; other Routines on this account already use
+it. The scheduler may start a run a few minutes after the set minute.
 
-Exercised end to end on 2026-09-09 against **Magyar Közlöny 2026. évi 127. szám**: the
-scheduled Routine reached magyarkozlony.hu, read the full text of the official PDF,
-produced the Hungarian report and emailed it to the legal recipient without supervision.
-A second run on the same day correctly produced nothing, because no newer issue had been
-published.
+Magyar Közlöny is normally published on working days; on a day with no new issue the
+Közlöny run produces nothing and stops after a one-line note. Push notifications are
+enabled on both Routines; the reports themselves arrive by email.
+
+## Editing a Routine
+
+A Routine created in the Routines interface can be edited only there: an agent cannot
+update or fire it (`update_trigger` and `fire_trigger` refuse it with *"Agents can only
+update routines they created"*), and in this organization an agent cannot attach
+connectors to a Routine either (`create_trigger` rejects the `connectors` parameter). To
+change the instructions:
+
+1. Edit the prompt in `prompts/` — it is authoritative — and mirror the change in the
+   matching `SKILL.md`.
+2. Paste everything below the horizontal rule into the Routine's prompt field, replacing
+   the old text.
+3. To test, use **Run now**. The Közlöny run sends nothing when no new issue has
+   appeared since its last report, so a test of that Routine needs a temporary test
+   paragraph at the top of the prompt, removed afterwards.
 
 ## Delivery
 
-- Email to **denes.grossman@henkel.com** and **ferenc.sarkozi@henkel.com** (one message) — the primary deliverable. Full report as a
-  self-contained HTML body with inline styles; never the artifact link, which is private
-  and will not open for an external recipient.
-- HTML artifact, font family Segoe UI, where the Artifact tool is available in the run.
-- Full report in the chat response of the run's session, always.
-- Nothing at all when no new issue has been published since the previous run — no
-  report, no artifact, no email, just a one-line note naming the most recent issue.
-- The run makes no commits and opens no pull requests.
+- **Közlöny monitor:** one email per new issue to **denes.grossman@henkel.com** and
+  **ferenc.sarkozi@henkel.com**, both in To — the primary deliverable. Nothing at all
+  when no new issue has been published since the previous run.
+- **GVH monitor:** one email to **denes.grossman@henkel.com**, only when at least one new
+  relevant item appeared; otherwise nothing is sent.
+- The body is the full report as a self-contained HTML (HyperText Markup Language)
+  document; never the artifact link, which is private and will not open for an external
+  recipient. The runs also publish the report as an HTML artifact where the Artifact tool
+  is available, and give it in full in the run's chat response.
+- The emails are sent from the Gmail account connected to the Routines,
+  dennisrobertgrossman@gmail.com.
+- The runs make no commits and open no pull requests.
 
 ## Prerequisites
 
-### 1. Network access must allow the official source
+### 1. Network access must allow the official sources
 
 By default a cloud environment uses the **Trusted** network access level, which allows
 package registries and a fixed list of common domains — and nothing else. The official
-Magyar Közlöny website is not on that list, so runs report HTTP 403 from the egress
-proxy until the environment is changed to **Custom** with the domains below.
+sources are not on that list, so runs get an HTTP (Hypertext Transfer Protocol) 403
+refusal from the egress proxy until the environment is changed to **Custom** with the
+domains below. Both Routines use the "Közlöny monitor" environment.
 
 **How to change it** (this is an account setting; a session cannot change it itself):
 
 1. Open https://claude.ai/code.
 2. In the row above the message box, click the cloud icon showing the current
    environment's name. There is no settings page or direct link for it.
-3. Hover the environment you use for this repository and click the settings (gear) icon
-   on the right. The **Update cloud environment** dialog opens.
+3. Hover the environment and click the settings (gear) icon on the right. The **Update
+   cloud environment** dialog opens.
 4. Set **Network access** to **Custom**.
 5. In **Allowed domains**, enter one domain per line:
 
    ```
    magyarkozlony.hu
    *.magyarkozlony.hu
+   gvh.hu
+   *.gvh.hu
    njt.hu
    *.njt.hu
    ```
 
    `magyarkozlony.hu` is the official Magyar Közlöny website and the source of the
-   official PDF files. `njt.hu` is the Nemzeti Jogszabálytár (National Legislation
-   Database), used to verify identifiers and consolidated texts. The `*.` lines cover
-   any subdomain a PDF may be served from.
+   official PDF (Portable Document Format) files; `gvh.hu` is the official website of
+   the Hungarian Competition Authority (Gazdasági Versenyhivatal). The `*.` lines cover
+   any subdomain a file may be served from. `njt.hu`, the Nemzeti Jogszabálytár
+   (National Legislation Database), is allowed but neither prompt uses it: on 2026-09-29
+   it returned an empty reply to requests from this environment, so nothing may depend
+   on it.
 6. Tick **Also include default list of common package managers**, so nothing that
    already works stops working.
 7. Save the dialog.
@@ -80,63 +104,48 @@ policy is enforced per request at the egress proxy, not copied at session start-
 
 Reference: https://code.claude.com/docs/en/cloud-environments#allow-specific-domains
 
+`WebFetch` does not consult this allowlist and is refused even for an allowed domain;
+the prompts therefore fetch every page with `curl` and read PDF files with `pdftotext`.
 If a host is still blocked, the run reports the blocked host and asks for the official
 link rather than substituting an unofficial copy.
 
-### 2. Required for email delivery: the Gmail connector on the Routine
+### 2. Connectors on the Routines
 
-A Routine created through the Claude Code Remote tools stores **no connectors**, and this
-organization does not allow attaching them programmatically — `create_trigger` rejects the
-`connectors` parameter with *"the connectors parameter is not available for this
-organization"*. The sessions the Routine starts therefore have no Gmail tool and cannot
-send the report anywhere.
+Attach connectors in the Routines interface (agents cannot, see above). Each Routine
+needs only the connectors in the table at the top:
 
-To make the daily email work, recreate the Routine from the **claude.ai Routines
-interface** with the **Gmail** connector attached, using the prompt in
-`prompts/daily-run.md`, then delete the tool-created Routine. Until that is done, each run
-reports at the top of its response that it could not send the email.
+- **Gmail** — to send the report, and to search and label the feedback messages.
+- **Google Drive** — for the calibration logs and, for the GVH monitor, the log of
+  processed items.
+- **Legal Data Hunter** (GVH monitor only, optional) — supplementary context. On its free
+  plan the daily quota runs out ("You've used today's quota on your Free plan" on
+  2026-09-29), so it can never be the primary source of a scheduled job.
 
-### 3. Required for the feedback loop: Gmail read access and the Google Drive connector
+Any other connector widens what an unattended run can reach without being used by the
+prompt; remove it.
+
+### 3. The feedback loop
 
 Readers re-categorize items by clicking a button in the email, which opens a pre-filled
-message to dennisrobertgrossman@gmail.com (subject prefix `[KV]`). Each run reads those
-messages with the Gmail connector, logs them to the Google Drive document "Közlöny
-kalibrációs napló", labels them `KV-feldolgozott`, and uses the log as precedent when
-rating. The Routine therefore needs the **Gmail** connector (search and label, not only
-send) and the **Google Drive** connector attached. Feedback is accepted only from
-denes.grossman@henkel.com, ferenc.sarkozi@henkel.com and dennisrobertgrossman@gmail.com.
+message to dennisrobertgrossman@gmail.com — the only mailbox the Routines can read.
+Subject prefixes are `[KV]` for the Közlöny monitor and `[GVH]` for the GVH monitor. Each
+run reads unprocessed feedback, logs it to a Google Drive document ("Közlöny kalibrációs
+napló" or "GVH kalibrációs napló"), labels the messages `KV-feldolgozott` or
+`GVH-feldolgozott`, and uses the log as precedent when rating. Feedback is accepted only
+from denes.grossman@henkel.com, dennisrobertgrossman@gmail.com and, for the Közlöny
+monitor, ferenc.sarkozi@henkel.com.
 
-### 4. Optional: the Lawstronaut connector
+## Verified
 
-Where the Lawstronaut connector is authorised for the account, the agent can use it as a
-secondary route to the corpus. It is not a substitute for the official PDF: the official
-Magyar Közlöny PDF remains the primary source for the issue review.
-
-## Changing the instructions
-
-Edit `.claude/skills/kozlony-monitor/SKILL.md`. If the change affects what the fresh
-session must know without the repository, mirror it in `prompts/daily-run.md` and update
-the Routine's prompt.
-
-## GVH monitor (second Routine)
-
-A separate Routine watches the Hungarian Competition Authority (Gazdasági Versenyhivatal)
-on gvh.hu. Its prompt is `prompts/gvh-run.md`; its summary is
-`.claude/skills/gvh-monitor/SKILL.md`.
-
-- **Schedule:** Tuesday, Wednesday and Thursday, 09:00 Budapest time (cron `0 7 * * 2-4`
-  in UTC during summer time; the local hour shifts by one in winter, as with the
-  Közlöny Routine).
-- **Environment:** the same "Közlöny monitor" environment, with `gvh.hu` and `*.gvh.hu`
-  added to the Custom allowed domains. Verified reachable on 2026-09-29, including a
-  decision PDF downloaded from its `/pfile/file` link and read with `pdftotext`.
-- **Connectors:** Gmail (send, search, label) and Google Drive. Create the Routine from the
-  claude.ai Routines interface so the connectors can be attached.
-- **Delivery:** an email to denes.grossman@henkel.com only when a new relevant item
-  appears; otherwise nothing is sent.
-- **State and feedback:** Google Drive documents "GVH figyelő — feldolgozott tételek" and
-  "GVH kalibrációs napló"; feedback subject prefix `[GVH]`, processed label
-  `GVH-feldolgozott`.
-- **Legal Data Hunter:** supplementary only. On 2026-09-29 the connector returned "You've
-  used today's quota on your Free plan", so it cannot be the primary source of a
-  scheduled job.
+- **Közlöny monitor:** exercised end to end on 2026-09-09 against Magyar Közlöny 2026.
+  évi 127. szám — the scheduled Routine reached magyarkozlony.hu, read the full text of
+  the official PDF, produced the Hungarian report and emailed it without supervision. A
+  second run on the same day correctly produced nothing, because no newer issue had been
+  published.
+- **GVH monitor:** gvh.hu verified reachable on 2026-09-29, including a decision PDF
+  downloaded from its `/pfile/file` link and read with `pdftotext`. The first run on
+  2026-09-29 recorded its baseline and emailed the report; a simulated run over
+  2026-06-05 to 2026-06-08 caught the 2026-06-05 press release "336 milliós GVH-bírság
+  tiltott ármegkötés miatt".
+- **Report layout:** both the email samples built from the prompts' building blocks pass
+  the prompts' pre-send check and render correctly in light and dark colour schemes.
