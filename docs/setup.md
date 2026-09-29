@@ -124,7 +124,7 @@ A separate Routine watches the Hungarian Competition Authority (Gazdasági Verse
 on gvh.hu. Its prompt is `prompts/gvh-run.md`; its summary is
 `.claude/skills/gvh-monitor/SKILL.md`.
 
-- **Schedule:** Tuesday, Wednesday and Thursday, 08:00 Budapest time (cron `0 6 * * 2-4`
+- **Schedule:** Tuesday, Wednesday and Thursday, 09:00 Budapest time (cron `0 7 * * 2-4`
   in UTC during summer time; the local hour shifts by one in winter, as with the
   Közlöny Routine).
 - **Environment:** the same "Közlöny monitor" environment, with `gvh.hu` and `*.gvh.hu`
