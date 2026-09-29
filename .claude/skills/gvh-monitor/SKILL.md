@@ -14,6 +14,11 @@ below the horizontal rule). Follow them exactly; this file summarizes the design
   `/pfile/file?path=…&inline=true` link and are read with `pdftotext`. Legal Data Hunter
   is optional supplementary context only — on the free plan its daily quota runs out, and
   its GVH coverage and freshness are unverified.
+- **Pagination:** list pages paginate via `_pageNumber/<n>` links; each run pages back
+  until it reaches an already-processed item or one published before the previous run, so
+  a gap (holiday, outage) cannot push items off the first page unseen. Press releases are
+  also read from the yearly subpage. New proceedings are announced as press releases; the
+  old "induló eljárások" section has not been updated since 2016.
 - **State:** Google Drive document "GVH figyelő — feldolgozott tételek" lists every item
   already reviewed (keyed by case number, or URL where there is none). The first run
   records the current listing as a baseline and assesses only the last 7 days.

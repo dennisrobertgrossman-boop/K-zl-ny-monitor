@@ -38,6 +38,10 @@ Végezd el a Gazdasági Versenyhivatal (GVH) közzétételeinek jogi figyelésé
 - Közlemények: `https://www.gvh.hu/szakmai_felhasznaloknak/kozlemenyek`
 - Tájékoztatók: `https://www.gvh.hu/szakmai_felhasznaloknak/tajekoztatok`
 
+Az új versenyfelügyeleti eljárások megindítását a GVH sajtóközleményként teszi közzé (a régi „induló eljárások" rovat 2016 óta nem frissül), ezért azokat a sajtóközlemények között keresd.
+
+**Lapozás.** A listák lapozhatók: a lap alján lévő oldalszám-linkek címe `_pageNumber/<szám>` végződésű (például `https://www.gvh.hu/sajtoszoba/sajtokozlemenyek/2026-os-sajtokozlemenyek/$rppid0x1543280x14_pageNumber/2`; az azonosító oldalanként eltérhet, mindig a letöltött oldalon talált linket használd). A sajtóközleményeknél az évi aloldalt (`https://www.gvh.hu/sajtoszoba/sajtokozlemenyek/<év>-os-sajtokozlemenyek` vagy az oldalon talált, az adott évre mutató link) is nézd meg. Minden listán addig lapozz tovább, amíg el nem érsz egy már feldolgozott tételt, vagy egy olyan tételt, amelyet az előző futás előtt tettek közzé (első futáskor: az utolsó 7 napnál régebbit). Ha egy lap összes tétele új, a következő lapot is meg kell nézned.
+
 A hivatalos PDF szövegét így olvasd be (mentett példányt ne tarts meg): `curl -sSL "<PDF link>" | pdftotext -layout - dontes.txt`. Ha a pdftotext hiányzik: `apt-get update && apt-get install -y poppler-utils`. Nem hivatalos másolatot soha ne használj a gvh.hu helyett. Ha a Legal Data Hunter eszköz elérhető, kizárólag kiegészítésként (korábbi GVH-gyakorlat kereséséhez) használhatod; ha kvóta- vagy egyéb hibát ad, lépj tovább nélküle — a gvh.hu-t soha nem helyettesíti.
 
 **3. Relevanciamérce.** Egy új tétel akkor releváns, ha hihetően érintheti a vállalatcsoportot, a termékeit, az értékesítési és beszerzési gyakorlatát, a szerződéseit, a kommunikációját vagy a megfelelési kötelezettségeit. Különösen:
