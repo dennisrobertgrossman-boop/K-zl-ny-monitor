@@ -19,8 +19,9 @@ below the horizontal rule). Follow them exactly; this file summarizes the design
   a gap (holiday, outage) cannot push items off the first page unseen. Press releases are
   also read from the yearly subpage. New proceedings are announced as press releases; the
   old "induló eljárások" section has not been updated since 2016.
-- **State:** Google Drive document "GVH figyelő — feldolgozott tételek" lists every item
-  already reviewed (keyed by case number, or by URL — Uniform Resource Locator — where there is none). The first run
+- **State:** every Google Drive document whose title starts with "GVH figyelő — feldolgozott
+  tételek" (the original plus any supplements) lists items
+  already reviewed; runs append with the Google Docs connector (keyed by case number, or by URL — Uniform Resource Locator — where there is none). The first run
   records the current listing as a baseline and assesses only the last 7 days.
 - **Relevance:** the business profile (adhesives, sealants and coatings; laundry, home care,
   hair and body care, professional hair) and its channels drive the standard: cartels and

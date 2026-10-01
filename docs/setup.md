@@ -6,18 +6,19 @@ below the horizontal rule in the matching file in `prompts/`.
 
 | Routine | Prompt | Schedule (cron, UTC) | Connectors it needs |
 | --- | --- | --- | --- |
-| **Közlöny monitor email feladat** | `prompts/daily-run.md` | `0 7 * * *` — every day | Gmail, Google Drive |
-| **GVH figyelő email feladat** | `prompts/gvh-run.md` | `0 7 * * 2-4` — Tuesday to Thursday | Gmail, Google Drive, Legal Data Hunter (optional) |
+| **Közlöny monitor email feladat** | `prompts/daily-run.md` | `30 6 * * *` — every day | Gmail, Google Drive, Google Docs |
+| **GVH figyelő email feladat** | `prompts/gvh-run.md` | `0 7 * * 2-4` — Tuesday to Thursday | Gmail, Google Drive, Google Docs, Legal Data Hunter (optional) |
 
 ## Schedule and time zone
 
 A cron expression without a prefix is evaluated in Coordinated Universal Time (UTC), so
 `0 7` means **09:00 Budapest time during Central European Summer Time** but **08:00
-during Central European Time**, which starts on **25 October 2026**. To keep 09:00
-Budapest time all year, set the schedules to:
+during Central European Time** (and `30 6` means 08:30 and 07:30), which starts on **25 October 2026**. To keep the
+Budapest hour all year (08:30 for the Közlöny monitor, 09:00 for the GVH monitor), set
+the schedules to:
 
 ```
-CRON_TZ=Europe/Budapest 0 9 * * *
+CRON_TZ=Europe/Budapest 30 8 * * *
 CRON_TZ=Europe/Budapest 0 9 * * 2-4
 ```
 
@@ -115,8 +116,13 @@ Attach connectors in the Routines interface (agents cannot, see above). Each Rou
 needs only the connectors in the table at the top:
 
 - **Gmail** — to send the report, and to search and label the feedback messages.
-- **Google Drive** — for the calibration logs and, for the GVH monitor, the log of
-  processed items.
+- **Google Drive** — to find, read and create the calibration logs and, for the GVH
+  monitor, the log of processed items.
+- **Google Docs** — to append lines to those logs. The Google Drive connector can only
+  create a file or change its title and location, not add text to an existing document:
+  on 2026-09-30 the GVH run therefore wrote its lines into a separate "(kiegészítés)"
+  document. Without Google Docs the prompts fall back to a new dated document each time,
+  and every run reads all documents whose title starts with the log's name.
 - **Legal Data Hunter** (GVH monitor only, optional) — supplementary context. On its free
   plan the daily quota runs out ("You've used today's quota on your Free plan" on
   2026-09-29), so it can never be the primary source of a scheduled job.
@@ -131,7 +137,10 @@ message to dennisrobertgrossman@gmail.com — the only mailbox the Routines can 
 Subject prefixes are `[KV]` for the Közlöny monitor and `[GVH]` for the GVH monitor. Each
 run reads unprocessed feedback, logs it to a Google Drive document ("Közlöny kalibrációs
 napló" or "GVH kalibrációs napló"), labels the messages `KV-feldolgozott` or
-`GVH-feldolgozott`, and uses the log as precedent when rating. Feedback is accepted only
+`GVH-feldolgozott`, and uses the log as precedent when rating. A feedback message counts
+as new only if its Gmail message identifier (or, for older lines, its date, item and
+re-categorization) is not yet in the log, so a missed label cannot log it twice — up to
+2026-10-01 no run had created the labels. Feedback is accepted only
 from denes.grossman@henkel.com, dennisrobertgrossman@gmail.com and, for the Közlöny
 monitor, ferenc.sarkozi@henkel.com.
 
