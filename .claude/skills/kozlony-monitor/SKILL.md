@@ -170,7 +170,8 @@ naplóban, ebből <M> új ebben a futásban."
 4. Do **not** download or store the PDF. Record the direct official link.
 5. Find the previous run's last issue from the published artifacts titled
    "Magyar Közlöny <year>/<issue>". If more than one issue was published since then,
-   review each of them, newest first. If there is no such artifact, review only the
+   review each of them in ascending issue order, oldest first, and finish and send each
+   issue's report before starting the next, so the emails arrive in publication order. If there is no such artifact, review only the
    newest issue.
 
 Continue only after the issue and the official PDF link are verified. If verification
